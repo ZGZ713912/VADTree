@@ -85,6 +85,64 @@ LLaVA-Video-7B-Qwen2 weight: [huggingface](https://huggingface.co/lmms-lab/LLaVA
 You can use LLaVA-Video-7B-Qwen2's environment to run DeepSeek-R1-Distill-Qwen-14B.  
 DeepSeek-R1-Distill-Qwen-14B weight: [huggingface](https://huggingface.co/deepseek-ai/DeepSeek-R1-Distill-Qwen-14B)
 
+# Evidence console (local WebUI)
+
+A local, read-only evidence desk for the released runs: score atlases, run register, HGTree node timeline, caption / chain-of-thought inspection, artifact manifest, and sandboxed re-verification of steps 2/6/7.
+
+![VADTree evidence console](docs/screenshots/overview.png)
+
+## Run it
+
+The console needs the restored release artifacts in **result/** and a Python 3.11 environment for the data layer. Raw videos and model checkpoints are only needed for steps 1/3/4/5.
+
+~~~bash
+python3 scripts/fetch_artifacts.py          # restore result/ from GitHub Releases
+uv venv --python 3.11 .venv
+uv pip install --python .venv/bin/python -r requirements-repro.txt
+cd webui && npm install && npm run build && cd ..
+.venv/bin/python -m server.app --port 8765   # http://127.0.0.1:8765
+~~~
+
+For frontend development, keep the API running and use Vite with its /api proxy:
+
+~~~bash
+cd webui
+npm run dev        # http://127.0.0.1:5173
+~~~
+
+The server binds to 127.0.0.1 and has no authentication; it is a single-user local tool.
+
+## Pages
+
+| Page | What it answers |
+| --- | --- |
+| Desk | Which dataset/run is featured, how it compares with coarse/fine baselines, and what the videos look like as score strips. |
+| Runs | Every published refinement and ensemble, including non-headline variants; featured marks the README configuration. |
+| Evidence | One video on one shared time axis: ensemble curve, GT bands, coarse/fine nodes, captions, and step-4 CoT. |
+| Pipeline | Seven stages with real verification state; steps 2/6/7 run into runs/&lt;job-id&gt;/ and stream logs. |
+| Archive | MANIFEST bundles, local environment, and the reproduction checks recorded by scripts/reproduce.py. |
+
+The UI intentionally shows uncertainty: XD refinement warnings keep their measured delta, blocked stages name the missing videos/checkpoints, and missing JSON fields render as “—” rather than invented curves.
+
+## Design system and skill
+
+- Design brief: docs/DESIGN_BRIEF.md
+- Visual system + review checklist skill: skills/vadtree-console-design/SKILL.md
+- Real-screenshot review: docs/DESIGN_REVIEW.md
+- Screenshots: docs/screenshots/
+
+The skill is adapted from the methodology of [distinctive-ai-design](https://github.com/houxin0010/distinctive-ai-design) and rewritten for this console's paper/ink/vermilion “evidence desk” language.
+
+## Reproduction
+
+The deterministic CPU stages can be re-run and compared with the released values:
+
+~~~bash
+.venv/bin/python scripts/reproduce.py
+~~~
+
+See docs/REPRODUCTION.md and repro/latest.json for the UCF/MSAD exact results and the two XD numpy-tie warnings. Steps 1/3/4/5 are not run by the console because this checkout has no videos or checkpoints.
+
 # Quick Start (Example)
 Here we provide a quick start guide to run VADTree on UCF-Crime dataset.
 ### 1. GEBD boundary extraction
