@@ -1,7 +1,6 @@
 import argparse, glob
 import os, pickle
 from src.data.video_record import VideoRecord
-from src.utils.vis_utils import visualize_video
 from src.utils.eval_utils import *
 
 def parse_args():
@@ -79,8 +78,8 @@ def parse_args():
         elif 'MSAD' in args.scores_json:
             args.normal_label = 0
             args.video_fps = 'auto' # MSAD数据集视频帧率不统一，自动获取
-            args.annotationfile_path=f'{vadtree_path}/dataset_info/msad/annotations/anomaly_test.txt'
-            args.temporal_annotation_file=f'{vadtree_path}/dataset_info/msad/annotations/Temporal_Anomaly_Annotation_for_Testing_Videos.txt'
+            args.annotationfile_path=f'{vadtree_path}/dataset_info/MSAD/annotations/anomaly_test.txt'
+            args.temporal_annotation_file=f'{vadtree_path}/dataset_info/MSAD/annotations/Temporal_Anomaly_Annotation_for_Testing_Videos.txt'
             if args.video_root is None: args.video_root = "/root/autodl-fs/lwl/data/MSAD_test/test_videos/"
 
     args.output_dir = os.path.dirname(args.scores_json)
@@ -178,9 +177,13 @@ def main(
                 all_video_split_pred = json.load(f)
 
     if 'MSAD' in args.scores_json: # load video info for fps
-            with open(f'{args.vadtree_path}/MSAD_test/EGEBD_x2x3x4_r50_eff_split_out_th0.5_peak_dfs_kmeans_1_0.4'
-                      '/dfs_coarse_sences.json') as f:
-                msad_video_info = json.load(f)
+        # The tree file sits next to the run, three levels above the score JSON;
+        # the old hard-coded MSAD_test path did not exist in a fresh checkout.
+        msad_info_path = os.path.join(
+            os.path.dirname(os.path.dirname(os.path.dirname(args.scores_json))),
+            'dfs_coarse_scenes.json')
+        with open(msad_info_path) as f:
+            msad_video_info = json.load(f)
 
     for k, video in enumerate(video_list):
         # if 'Bad.Boys.1995__#01-11-55_01-12-40_label_G-B2-B6' not in video.path:
@@ -263,6 +266,10 @@ def main(
         if args.video_fps=='auto':
             video_fps = msad_video_info[video_name+'.mp4']['fps']
         if visualize:
+            # Importing this module pulls in decord/cv2. Headless metric runs do
+            # not need it, so keep the dependency behind the visualize flag.
+            from src.utils.vis_utils import visualize_video
+
             vis_dir = os.path.join(output_dir, 'vis_dir')
             os.makedirs(vis_dir, exist_ok=True)
 

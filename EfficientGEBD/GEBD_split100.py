@@ -250,7 +250,7 @@ if __name__ == '__main__':
         elif 'UCF' in args.video_dir:
             args.annotationfile_path = f'{vadtree_path}/dataset_info/ucf_crime/annotations/anomaly_test.txt'    
         elif 'MSAD' in args.video_dir:
-            args.annotationfile_path=f'{vadtree_path}/dataset_info/MSAD_test/anomaly_test.txt'
+            args.annotationfile_path=f'{vadtree_path}/dataset_info/MSAD/annotations/anomaly_test.txt'
         else:
             raise ValueError(f'Unknown dataset in video_dir: {args.video_dir}')
 

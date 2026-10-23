@@ -4,8 +4,8 @@ import numpy as np
 from collections import Counter
 import matplotlib.pyplot as plt
 from sklearn.cluster import KMeans, DBSCAN
-from sklearn_extra.cluster import KMedoids
-# pip install -i https://mirrors.aliyun.com/pypi/simple scikit-learn-extra
+# scikit-learn-extra is only needed for the optional kmedoids threshold. It is
+# imported lazily so the default kmeans path works without the extra package.
 # llava
 def remove_redundant(nodes):
     """Split DFS nodes into visible nodes and nodes covered by another node.
@@ -129,6 +129,7 @@ def cluster_two_groups(boundary_score, algorithm='kmedoids'):
 
     elif algorithm == 'kmedoids':
         # KMedoids 实现
+        from sklearn_extra.cluster import KMedoids
         kmedoids = KMedoids(n_clusters=2, init='k-medoids++', random_state=0)
         labels = kmedoids.fit_predict(scores)
         centers = kmedoids.cluster_centers_.flatten()
@@ -364,7 +365,7 @@ if __name__ == "__main__":
         elif 'XD' in args.json_path:
             args.temporal_annotation_file=f'{vadtree_path}/dataset_info/xd_violence/annotations/temporal_anomaly_annotation_for_testing_videos.txt'
         elif 'MSAD' in args.json_path:
-            args.temporal_annotation_file=f'{vadtree_path}/dataset_info/msad/annotations/Temporal_Anomaly_Annotation_for_Testing_Videos.txt'
+            args.temporal_annotation_file=f'{vadtree_path}/dataset_info/MSAD/annotations/Temporal_Anomaly_Annotation_for_Testing_Videos.txt'
         else:
             raise NotImplementedError
 

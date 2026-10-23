@@ -34,3 +34,11 @@ paper_result/
 # Python bytecode
 __pycache__/
 *.pyc
+# Local reproduction / web console environments
+/.venv/
+/.venv-*/
+/repro/work/
+/webui/node_modules/
+/webui/dist/
+/server/__pycache__/
+*.tsbuildinfo

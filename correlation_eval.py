@@ -2,7 +2,6 @@ import argparse, glob
 import numpy as np, re
 
 from src.data.video_record import VideoRecord
-from src.utils.vis_utils import visualize_video
 from src.utils.eval_utils import *
 from src.utils.ensemble_utils import *
 
@@ -85,8 +84,8 @@ def parse_args():
     elif 'MSAD' in args.coarse_scores_json:
         args.normal_label = 0
         args.video_fps = 'auto'
-        args.annotationfile_path=f'{vadtree_path}/dataset_info/MSAD_test/anomaly_test.txt'
-        args.temporal_annotation_file=f'{vadtree_path}/dataset_info/MSAD_test/Temporal_Anomaly_Annotation_for_Testing_Videos.txt'
+        args.annotationfile_path=f'{vadtree_path}/dataset_info/MSAD/annotations/anomaly_test.txt'
+        args.temporal_annotation_file=f'{vadtree_path}/dataset_info/MSAD/annotations/Temporal_Anomaly_Annotation_for_Testing_Videos.txt'
         if args.video_root is None: args.video_root = "/root/autodl-fs/lwl/data/MSAD_test/test_videos/"
     
     args.output_dir = os.path.dirname(args.coarse_scores_json)
@@ -149,8 +148,10 @@ def main(
             all_video_split_pred = json.load(f)
 
     if 'MSAD' in args.coarse_scores_json: # load video info for fps
-        with open(f'{args.vadtree_path}/MSAD_test/EGEBD_x2x3x4_r50_eff_split_out_th0.5_peak_dfs_kmeans_1_0.4'
-                  '/dfs_coarse_sences.json') as f:
+        msad_info_path = os.path.join(
+            os.path.dirname(os.path.dirname(os.path.dirname(args.coarse_scores_json))),
+            'dfs_coarse_scenes.json')
+        with open(msad_info_path) as f:
             msad_video_info = json.load(f)
 
     ab_pro_mean = []
@@ -277,6 +278,9 @@ def main(
 
         # if False:
         if args.visualize:
+            # Keep decord/cv2 out of the headless evaluation path.
+            from src.utils.vis_utils import visualize_video
+
             vis_dir = os.path.join(args.output_dir, 'vis_dir')
             os.makedirs(vis_dir, exist_ok=True)
 

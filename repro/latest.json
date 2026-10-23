@@ -1,0 +1,701 @@
+{
+  "generated_at": "2026-10-23T19:58:21+00:00",
+  "versions": {
+    "python": "3.11.15",
+    "platform": "Linux-6.18.1-arch1-2-x86_64-with-glibc2.44",
+    "numpy": "2.4.6",
+    "sklearn": "1.9.1",
+    "matplotlib": "3.11.2",
+    "scipy": "1.17.1",
+    "git": "ed2e508",
+    "gpu": [
+      "NVIDIA GeForce RTX 4060 Ti, 16380 MiB"
+    ]
+  },
+  "workdir": null,
+  "checks": [
+    {
+      "id": "UCF_Crime_test-step2",
+      "status": "pass",
+      "detail": "HGTree output is semantically identical to the published structure",
+      "files": {
+        "pred.json": {
+          "semantically_equal": true,
+          "videos": 290
+        },
+        "dfs_coarse_scenes.json": {
+          "semantically_equal": true,
+          "videos": 290
+        },
+        "dfs_fine_scenes.json": {
+          "semantically_equal": true,
+          "videos": 290
+        },
+        "dfs_redundant_scenes.json": {
+          "semantically_equal": true,
+          "videos": 290
+        }
+      },
+      "log": "logs/ucf_crime_test-step2.log"
+    },
+    {
+      "id": "UCF_Crime_test-step6-coarse",
+      "status": "pass",
+      "detail": "refined scores and aggregate ROC/PR metrics match the published run",
+      "metric_equal": true,
+      "scores_equal": true,
+      "per_video_metrics_equal": true,
+      "mean_fields_equal": true,
+      "max_score_delta": 0.0,
+      "aggregate_metric_delta": 0.0,
+      "published_metric": {
+        "all": {
+          "pr_auc": 0.3247,
+          "roc_auc": 0.8276
+        },
+        "Abnormal": {
+          "pr_auc": 0.3639,
+          "roc_auc": 0.6998
+        },
+        "Normal": {
+          "pr_auc": 0.5,
+          "roc_auc": null
+        },
+        "Abuse": {
+          "pr_auc": 0.0465,
+          "roc_auc": 0.5605
+        },
+        "Arrest": {
+          "pr_auc": 0.4566,
+          "roc_auc": 0.7348
+        },
+        "Arson": {
+          "pr_auc": 0.3952,
+          "roc_auc": 0.6205
+        },
+        "Assault": {
+          "pr_auc": 0.8741,
+          "roc_auc": 0.8393
+        },
+        "Burglary": {
+          "pr_auc": 0.3324,
+          "roc_auc": 0.5258
+        },
+        "Explosion": {
+          "pr_auc": 0.3075,
+          "roc_auc": 0.7254
+        },
+        "Fighting": {
+          "pr_auc": 0.4242,
+          "roc_auc": 0.5492
+        },
+        "RoadAccidents": {
+          "pr_auc": 0.1175,
+          "roc_auc": 0.5174
+        },
+        "Robbery": {
+          "pr_auc": 0.8059,
+          "roc_auc": 0.8169
+        },
+        "Shooting": {
+          "pr_auc": 0.2331,
+          "roc_auc": 0.7346
+        },
+        "Shoplifting": {
+          "pr_auc": 0.271,
+          "roc_auc": 0.6048
+        },
+        "Stealing": {
+          "pr_auc": 0.6742,
+          "roc_auc": 0.7308
+        },
+        "Vandalism": {
+          "pr_auc": 0.1502,
+          "roc_auc": 0.3965
+        }
+      },
+      "reproduced_metric": {
+        "all": {
+          "pr_auc": 0.3247,
+          "roc_auc": 0.8276
+        },
+        "Abnormal": {
+          "pr_auc": 0.3639,
+          "roc_auc": 0.6998
+        },
+        "Normal": {
+          "pr_auc": 0.5,
+          "roc_auc": null
+        },
+        "Abuse": {
+          "pr_auc": 0.0465,
+          "roc_auc": 0.5605
+        },
+        "Arrest": {
+          "pr_auc": 0.4566,
+          "roc_auc": 0.7348
+        },
+        "Arson": {
+          "pr_auc": 0.3952,
+          "roc_auc": 0.6205
+        },
+        "Assault": {
+          "pr_auc": 0.8741,
+          "roc_auc": 0.8393
+        },
+        "Burglary": {
+          "pr_auc": 0.3324,
+          "roc_auc": 0.5258
+        },
+        "Explosion": {
+          "pr_auc": 0.3075,
+          "roc_auc": 0.7254
+        },
+        "Fighting": {
+          "pr_auc": 0.4242,
+          "roc_auc": 0.5492
+        },
+        "RoadAccidents": {
+          "pr_auc": 0.1175,
+          "roc_auc": 0.5174
+        },
+        "Robbery": {
+          "pr_auc": 0.8059,
+          "roc_auc": 0.8169
+        },
+        "Shooting": {
+          "pr_auc": 0.2331,
+          "roc_auc": 0.7346
+        },
+        "Shoplifting": {
+          "pr_auc": 0.271,
+          "roc_auc": 0.6048
+        },
+        "Stealing": {
+          "pr_auc": 0.6742,
+          "roc_auc": 0.7308
+        },
+        "Vandalism": {
+          "pr_auc": 0.1502,
+          "roc_auc": 0.3965
+        }
+      },
+      "videos": 290,
+      "log": "logs/ucf_crime_test-step6-coarse.log"
+    },
+    {
+      "id": "UCF_Crime_test-step6-fine",
+      "status": "pass",
+      "detail": "refined scores and aggregate ROC/PR metrics match the published run",
+      "metric_equal": true,
+      "scores_equal": true,
+      "per_video_metrics_equal": false,
+      "mean_fields_equal": false,
+      "max_score_delta": 0.0,
+      "aggregate_metric_delta": 0.0,
+      "published_metric": {
+        "pr_auc": 0.4039,
+        "roc_auc": 0.8305,
+        "1_mean": 0.2419,
+        "0_mean": 0.0643
+      },
+      "reproduced_metric": {
+        "all": {
+          "pr_auc": 0.4039,
+          "roc_auc": 0.8305
+        },
+        "Abnormal": {
+          "pr_auc": 0.4333,
+          "roc_auc": 0.7044
+        },
+        "Normal": {
+          "pr_auc": 0.5,
+          "roc_auc": null
+        },
+        "Abuse": {
+          "pr_auc": 0.0297,
+          "roc_auc": 0.1327
+        },
+        "Arrest": {
+          "pr_auc": 0.4625,
+          "roc_auc": 0.7235
+        },
+        "Arson": {
+          "pr_auc": 0.3822,
+          "roc_auc": 0.53
+        },
+        "Assault": {
+          "pr_auc": 0.9527,
+          "roc_auc": 0.9747
+        },
+        "Burglary": {
+          "pr_auc": 0.3777,
+          "roc_auc": 0.5705
+        },
+        "Explosion": {
+          "pr_auc": 0.4015,
+          "roc_auc": 0.8172
+        },
+        "Fighting": {
+          "pr_auc": 0.6978,
+          "roc_auc": 0.7594
+        },
+        "RoadAccidents": {
+          "pr_auc": 0.1363,
+          "roc_auc": 0.5599
+        },
+        "Robbery": {
+          "pr_auc": 0.5226,
+          "roc_auc": 0.4749
+        },
+        "Shooting": {
+          "pr_auc": 0.2757,
+          "roc_auc": 0.7429
+        },
+        "Shoplifting": {
+          "pr_auc": 0.1803,
+          "roc_auc": 0.6375
+        },
+        "Stealing": {
+          "pr_auc": 0.791,
+          "roc_auc": 0.8697
+        },
+        "Vandalism": {
+          "pr_auc": 0.2007,
+          "roc_auc": 0.5129
+        }
+      },
+      "videos": 290,
+      "log": "logs/ucf_crime_test-step6-fine.log"
+    },
+    {
+      "id": "UCF_Crime_test-step7",
+      "status": "pass",
+      "detail": "ensemble scores and metrics match the published run",
+      "metric_equal": true,
+      "scores_equal": true,
+      "published_metric": {
+        "pr_auc": 0.4189,
+        "roc_auc": 0.8474
+      },
+      "reproduced_metric": {
+        "pr_auc": 0.4189,
+        "roc_auc": 0.8474
+      },
+      "videos": 290,
+      "log": "logs/ucf_crime_test-step7.log"
+    },
+    {
+      "id": "MSAD_test-step6-coarse",
+      "status": "pass",
+      "detail": "refined scores and aggregate ROC/PR metrics match the published run",
+      "metric_equal": true,
+      "scores_equal": true,
+      "per_video_metrics_equal": false,
+      "mean_fields_equal": true,
+      "max_score_delta": 0.0,
+      "aggregate_metric_delta": 0.0,
+      "published_metric": {
+        "all": {
+          "pr_auc": 0.6822,
+          "roc_auc": 0.8701
+        },
+        "Abnormal": {
+          "pr_auc": 0.7303,
+          "roc_auc": 0.6555
+        },
+        "Normal": {
+          "pr_auc": 0.5,
+          "roc_auc": null
+        },
+        "Assault": {
+          "pr_auc": 0.5434,
+          "roc_auc": 0.5887
+        },
+        "Explosion": {
+          "pr_auc": 0.8314,
+          "roc_auc": 0.8287
+        },
+        "Fighting": {
+          "pr_auc": 0.8701,
+          "roc_auc": 0.8279
+        },
+        "Fire": {
+          "pr_auc": 0.8923,
+          "roc_auc": 0.7835
+        },
+        "Object Falling": {
+          "pr_auc": 0.5664,
+          "roc_auc": 0.5497
+        },
+        "People Falling": {
+          "pr_auc": 0.4182,
+          "roc_auc": 0.4841
+        },
+        "Robbery": {
+          "pr_auc": 0.8907,
+          "roc_auc": 0.7386
+        },
+        "Shooting": {
+          "pr_auc": 0.7183,
+          "roc_auc": 0.6631
+        },
+        "Traffic Accident": {
+          "pr_auc": 0.6076,
+          "roc_auc": 0.6571
+        },
+        "Vandalism": {
+          "pr_auc": 0.8665,
+          "roc_auc": 0.8777
+        },
+        "Water Incident": {
+          "pr_auc": 0.7554,
+          "roc_auc": 0.2343
+        }
+      },
+      "reproduced_metric": {
+        "all": {
+          "pr_auc": 0.6822,
+          "roc_auc": 0.8701
+        },
+        "Abnormal": {
+          "pr_auc": 0.7303,
+          "roc_auc": 0.6555
+        },
+        "Normal": {
+          "pr_auc": 0.5,
+          "roc_auc": null
+        },
+        "Assault": {
+          "pr_auc": 0.5434,
+          "roc_auc": 0.5887
+        },
+        "Explosion": {
+          "pr_auc": 0.8314,
+          "roc_auc": 0.8287
+        },
+        "Fighting": {
+          "pr_auc": 0.8701,
+          "roc_auc": 0.8279
+        },
+        "Fire": {
+          "pr_auc": 0.8923,
+          "roc_auc": 0.7835
+        },
+        "Object Falling": {
+          "pr_auc": 0.5664,
+          "roc_auc": 0.5497
+        },
+        "People Falling": {
+          "pr_auc": 0.4183,
+          "roc_auc": 0.4842
+        },
+        "Robbery": {
+          "pr_auc": 0.8907,
+          "roc_auc": 0.7386
+        },
+        "Shooting": {
+          "pr_auc": 0.7183,
+          "roc_auc": 0.6631
+        },
+        "Traffic Accident": {
+          "pr_auc": 0.6077,
+          "roc_auc": 0.6572
+        },
+        "Vandalism": {
+          "pr_auc": 0.8665,
+          "roc_auc": 0.8777
+        },
+        "Water Incident": {
+          "pr_auc": 0.7554,
+          "roc_auc": 0.2341
+        }
+      },
+      "videos": 240,
+      "log": "logs/msad_test-step6-coarse.log"
+    },
+    {
+      "id": "MSAD_test-step6-fine",
+      "status": "pass",
+      "detail": "refined scores and aggregate ROC/PR metrics match the published run",
+      "metric_equal": true,
+      "scores_equal": true,
+      "per_video_metrics_equal": false,
+      "mean_fields_equal": true,
+      "max_score_delta": 0.0,
+      "aggregate_metric_delta": 0.0,
+      "published_metric": {
+        "all": {
+          "pr_auc": 0.6899,
+          "roc_auc": 0.8671
+        },
+        "Abnormal": {
+          "pr_auc": 0.7611,
+          "roc_auc": 0.6749
+        },
+        "Normal": {
+          "pr_auc": 0.5,
+          "roc_auc": null
+        },
+        "Assault": {
+          "pr_auc": 0.7152,
+          "roc_auc": 0.7425
+        },
+        "Explosion": {
+          "pr_auc": 0.8018,
+          "roc_auc": 0.7771
+        },
+        "Fighting": {
+          "pr_auc": 0.961,
+          "roc_auc": 0.9246
+        },
+        "Fire": {
+          "pr_auc": 0.8563,
+          "roc_auc": 0.6881
+        },
+        "Object Falling": {
+          "pr_auc": 0.4865,
+          "roc_auc": 0.3715
+        },
+        "People Falling": {
+          "pr_auc": 0.5296,
+          "roc_auc": 0.5527
+        },
+        "Robbery": {
+          "pr_auc": 0.8395,
+          "roc_auc": 0.5914
+        },
+        "Shooting": {
+          "pr_auc": 0.7987,
+          "roc_auc": 0.6974
+        },
+        "Traffic Accident": {
+          "pr_auc": 0.4654,
+          "roc_auc": 0.5796
+        },
+        "Vandalism": {
+          "pr_auc": 0.8162,
+          "roc_auc": 0.8287
+        },
+        "Water Incident": {
+          "pr_auc": 0.9283,
+          "roc_auc": 0.6883
+        }
+      },
+      "reproduced_metric": {
+        "all": {
+          "pr_auc": 0.6899,
+          "roc_auc": 0.8671
+        },
+        "Abnormal": {
+          "pr_auc": 0.7611,
+          "roc_auc": 0.675
+        },
+        "Normal": {
+          "pr_auc": 0.5,
+          "roc_auc": null
+        },
+        "Assault": {
+          "pr_auc": 0.7151,
+          "roc_auc": 0.7425
+        },
+        "Explosion": {
+          "pr_auc": 0.8025,
+          "roc_auc": 0.7774
+        },
+        "Fighting": {
+          "pr_auc": 0.961,
+          "roc_auc": 0.9246
+        },
+        "Fire": {
+          "pr_auc": 0.8563,
+          "roc_auc": 0.6881
+        },
+        "Object Falling": {
+          "pr_auc": 0.4865,
+          "roc_auc": 0.3719
+        },
+        "People Falling": {
+          "pr_auc": 0.5306,
+          "roc_auc": 0.5529
+        },
+        "Robbery": {
+          "pr_auc": 0.8395,
+          "roc_auc": 0.5915
+        },
+        "Shooting": {
+          "pr_auc": 0.7988,
+          "roc_auc": 0.6975
+        },
+        "Traffic Accident": {
+          "pr_auc": 0.4654,
+          "roc_auc": 0.5796
+        },
+        "Vandalism": {
+          "pr_auc": 0.8162,
+          "roc_auc": 0.8287
+        },
+        "Water Incident": {
+          "pr_auc": 0.9282,
+          "roc_auc": 0.6883
+        }
+      },
+      "videos": 240,
+      "log": "logs/msad_test-step6-fine.log"
+    },
+    {
+      "id": "MSAD_test-step7",
+      "status": "pass",
+      "detail": "ensemble scores and metrics match the published run",
+      "metric_equal": true,
+      "scores_equal": true,
+      "published_metric": {
+        "pr_auc": 0.7141,
+        "roc_auc": 0.8932
+      },
+      "reproduced_metric": {
+        "pr_auc": 0.7141,
+        "roc_auc": 0.8932
+      },
+      "videos": 240,
+      "log": "logs/msad_test-step7.log"
+    },
+    {
+      "id": "XD_Violence_test-step6-coarse",
+      "status": "warning",
+      "detail": "refined scores are not bit-identical (aggregate delta 0.0027, max segment delta 0.4033), consistent with numpy argsort tie-order sensitivity",
+      "metric_equal": false,
+      "scores_equal": false,
+      "per_video_metrics_equal": false,
+      "mean_fields_equal": false,
+      "max_score_delta": 0.4033,
+      "aggregate_metric_delta": 0.0027,
+      "published_metric": {
+        "pr_auc": 0.6516,
+        "roc_auc": 0.8936,
+        "1_mean": 0.4087,
+        "0_mean": 0.1005
+      },
+      "reproduced_metric": {
+        "all": {
+          "pr_auc": 0.6489,
+          "roc_auc": 0.8913
+        },
+        "Abnormal": {
+          "pr_auc": 0.6694,
+          "roc_auc": 0.7104
+        },
+        "Normal": {
+          "pr_auc": 0.5,
+          "roc_auc": null
+        },
+        "Fighting": {
+          "pr_auc": 0.6534,
+          "roc_auc": 0.6834
+        },
+        "Shooting": {
+          "pr_auc": 0.3987,
+          "roc_auc": 0.6713
+        },
+        "Riot": {
+          "pr_auc": 0.9141,
+          "roc_auc": 0.8147
+        },
+        "Abuse": {
+          "pr_auc": 0.5716,
+          "roc_auc": 0.7898
+        },
+        "Car Accident": {
+          "pr_auc": 0.3713,
+          "roc_auc": 0.6002
+        },
+        "Explosion": {
+          "pr_auc": 0.4721,
+          "roc_auc": 0.6826
+        }
+      },
+      "videos": 800,
+      "log": "logs/xd_violence_test-step6-coarse.log"
+    },
+    {
+      "id": "XD_Violence_test-step6-fine",
+      "status": "warning",
+      "detail": "refined scores are not bit-identical (aggregate delta 0.0047, max segment delta 0.3513), consistent with numpy argsort tie-order sensitivity",
+      "metric_equal": false,
+      "scores_equal": false,
+      "per_video_metrics_equal": false,
+      "mean_fields_equal": false,
+      "max_score_delta": 0.3513,
+      "aggregate_metric_delta": 0.0047,
+      "published_metric": {
+        "pr_auc": 0.6761,
+        "roc_auc": 0.9004,
+        "1_mean": 0.3932,
+        "0_mean": 0.0902
+      },
+      "reproduced_metric": {
+        "all": {
+          "pr_auc": 0.6714,
+          "roc_auc": 0.8981
+        },
+        "Abnormal": {
+          "pr_auc": 0.6942,
+          "roc_auc": 0.7363
+        },
+        "Normal": {
+          "pr_auc": 0.5,
+          "roc_auc": null
+        },
+        "Fighting": {
+          "pr_auc": 0.7131,
+          "roc_auc": 0.749
+        },
+        "Shooting": {
+          "pr_auc": 0.3999,
+          "roc_auc": 0.6858
+        },
+        "Riot": {
+          "pr_auc": 0.9307,
+          "roc_auc": 0.8298
+        },
+        "Abuse": {
+          "pr_auc": 0.5966,
+          "roc_auc": 0.8236
+        },
+        "Car Accident": {
+          "pr_auc": 0.4127,
+          "roc_auc": 0.6425
+        },
+        "Explosion": {
+          "pr_auc": 0.5163,
+          "roc_auc": 0.7545
+        }
+      },
+      "videos": 800,
+      "log": "logs/xd_violence_test-step6-fine.log"
+    },
+    {
+      "id": "XD_Violence_test-step7",
+      "status": "pass",
+      "detail": "ensemble scores and metrics match the published run",
+      "metric_equal": true,
+      "scores_equal": true,
+      "published_metric": {
+        "pr_auc": 0.6791,
+        "roc_auc": 0.9047
+      },
+      "reproduced_metric": {
+        "pr_auc": 0.6791,
+        "roc_auc": 0.9047
+      },
+      "videos": 800,
+      "log": "logs/xd_violence_test-step7.log"
+    }
+  ],
+  "not_run": [
+    "step 1 EfficientGEBD boundary extraction (needs videos + checkpoint)",
+    "step 3 LLaVA-Video captioning (needs videos + 7B checkpoint)",
+    "step 4 DeepSeek-R1 reasoning (sampled at temperature=0.6, not bit-reproducible)",
+    "step 5 ImageBind similarity (needs videos + features)"
+  ]
+}

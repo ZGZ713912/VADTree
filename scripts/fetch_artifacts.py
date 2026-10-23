@@ -102,19 +102,54 @@ def safe_extract(archive, dest):
                                       if m.isfile() or m.isdir()])
 
 
+def strip_cot_inplace(data):
+    """Blank chain-of-thought strings, matching package_artifacts.strip_cot()."""
+    scores = data.get("vid_score") if isinstance(data, dict) else None
+    if isinstance(scores, dict):
+        for segs in scores.values():
+            if not isinstance(segs, dict):
+                continue
+            for value in segs.values():
+                if (isinstance(value, list) and len(value) > 1
+                        and isinstance(value[-1], str) and len(value[-1]) > 50):
+                    value[-1] = ""
+    return data
+
+
+def sha256_stripped_json(path):
+    """Hash a local score JSON after normalising it to the published form.
+
+    The step4-scores and step6-7 bundles are published with the chain-of-thought
+    text blanked out. A workspace restored from the full step4-cot-archive holds
+    the same scores with reasoning attached; both variants are valid, so
+    verification normalises before comparing.
+    """
+    with open(path, "r", encoding="utf-8") as f:
+        data = strip_cot_inplace(json.load(f))
+    payload = json.dumps(data, ensure_ascii=False, indent=4).encode("utf-8")
+    return hashlib.sha256(payload).hexdigest()
+
+
 def verify_files(bundle, dest, quiet=False):
     bad = []
     missing = []
+    full_cot = []
     for entry in bundle["files"]:
         path = os.path.join(dest, entry["path"])
         if not os.path.exists(path):
             missing.append(entry["path"])
             continue
-        if os.path.getsize(path) != entry["bytes"] or sha256_file(path) != entry["sha256"]:
-            bad.append(entry["path"])
+        if os.path.getsize(path) == entry["bytes"] and sha256_file(path) == entry["sha256"]:
+            continue
+        if (bundle.get("stripped_cot") and path.endswith(".json")
+                and sha256_stripped_json(path) == entry["sha256"]):
+            full_cot.append(entry["path"])
+            continue
+        bad.append(entry["path"])
     if not quiet:
         if not missing and not bad:
-            print("    ok  %d files" % len(bundle["files"]))
+            extra = " (%d with full CoT)" % len(full_cot) if full_cot else ""
+            print("    ok  %d files%s" % (len(bundle["files"]), extra))
         for p in missing[:5]:
             print("    missing  %s" % p)
         for p in bad[:5]:

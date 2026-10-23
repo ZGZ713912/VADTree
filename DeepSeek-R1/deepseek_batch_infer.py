@@ -115,7 +115,7 @@ def parse_args():
     elif 'XD' in args.output_summary_json:
         args.annotationfile_path = f'{vadtree_path}/dataset_info/xd_violence/annotations/anomaly_test.txt'
     elif 'MSAD' in args.output_summary_json:
-        args.annotationfile_path=f'{vadtree_path}/dataset_info/msad/annotations/anomaly_test.txt'
+        args.annotationfile_path=f'{vadtree_path}/dataset_info/MSAD/annotations/anomaly_test.txt'
     else:
         raise ValueError('Unknown annotationfile_path file format.')
 
