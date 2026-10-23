@@ -1,0 +1,587 @@
+{
+  "version": "results-v1",
+  "release_tag": "results-v1",
+  "repo": "ZGZ713912/VADTree",
+  "generated_at": "2026-10-23T12:58:09+00:00",
+  "total_bytes": 151339350,
+  "bundles": [
+    {
+      "name": "step1-2-boundaries-structure",
+      "asset": "vadtree-step1-2-boundaries-structure.tar.gz",
+      "steps": [
+        1,
+        2
+      ],
+      "required": false,
+      "stripped_cot": false,
+      "description": "GEBD boundary confidences and HGTree coarse/fine/redundant nodes. Reproducible on CPU in minutes from the videos.",
+      "bytes": 5696132,
+      "sha256": "5fe4588c9deedd4cd8920b69cba5dc03da3efba951977d64e5760df721bc92c8",
+      "files": [
+        {
+          "path": "result/MSAD_test/EGEBD_x2x3x4_r50_eff_split_out_th0.5/pred_scenes_th0.5.json",
+          "bytes": 967011,
+          "sha256": "c54b8f7d9250f49c4480ad32668fd6586325f688c057cc205a8baa21f9f88e6f"
+        },
+        {
+          "path": "result/MSAD_test/EGEBD_x2x3x4_r50_eff_split_out_th0.5/scenes_th0.5.json",
+          "bytes": 68868,
+          "sha256": "1c62a9e7bcb79f2c53385d8669c8ca7b5c0892dafd01d7341668a47ee7d212bb"
+        },
+        {
+          "path": "result/MSAD_test/EGEBD_x2x3x4_r50_eff_split_out_th0.5_peak_dfs_kmeans_1_0.3/dfs_coarse_scenes.json",
+          "bytes": 102904,
+          "sha256": "d7499e34b73ba3a56b743d83072ec62480600b3d104cb7800e36946e243dba2c"
+        },
+        {
+          "path": "result/MSAD_test/EGEBD_x2x3x4_r50_eff_split_out_th0.5_peak_dfs_kmeans_1_0.3/dfs_fine_scenes.json",
+          "bytes": 192646,
+          "sha256": "9d94b52a1385109c2d288585cb4a1682f489208716d80c44145fd08dbf67e680"
+        },
+        {
+          "path": "result/MSAD_test/EGEBD_x2x3x4_r50_eff_split_out_th0.5_peak_dfs_kmeans_1_0.3/pred.json",
+          "bytes": 936797,
+          "sha256": "0d73df4db2f325965822c1f530412d74f7c4cf3a4816e85e09cd9aaee95da6df"
+        },
+        {
+          "path": "result/UCF_Crime_test/EGEBD_x2x3x4_r50_eff_split_out_th0.5/pred_scenes_th0.5.json",
+          "bytes": 6868776,
+          "sha256": "b73c7c00f596249a0a5e2659112f2b4ad9fdd8c58d53c3ee7a65922f101c5b1c"
+        },
+        {
+          "path": "result/UCF_Crime_test/EGEBD_x2x3x4_r50_eff_split_out_th0.5/scenes_th0.5.json",
+          "bytes": 147783,
+          "sha256": "ad28f564e64f501237c4e3ff58f2d25521b24f7a7f19e97f87e7c4823557af00"
+        },
+        {
+          "path": "result/UCF_Crime_test/EGEBD_x2x3x4_r50_eff_split_out_th0.5_peak_dfs_kmeans_1_0.4/dfs_coarse_scenes.json",
+          "bytes": 215777,
+          "sha256": "8e3e42970787302ea23ab32fd05302165d280576c76268c8f6c6b503e60f7348"
+        },
+        {
+          "path": "result/UCF_Crime_test/EGEBD_x2x3x4_r50_eff_split_out_th0.5_peak_dfs_kmeans_1_0.4/dfs_fine_scenes.json",
+          "bytes": 511547,
+          "sha256": "d61a4fe545ce02ad2d603cb941343f0f47d86187bf23cc9ba7fb740002b32d2b"
+        },
+        {
+          "path": "result/UCF_Crime_test/EGEBD_x2x3x4_r50_eff_split_out_th0.5_peak_dfs_kmeans_1_0.4/dfs_redundant_scenes.json",
+          "bytes": 411433,
+          "sha256": "62aeeb1a1ad58e038a0b6f57d3845515b93eb435c60373af01a0e0d2190c29c2"
+        },
+        {
+          "path": "result/UCF_Crime_test/EGEBD_x2x3x4_r50_eff_split_out_th0.5_peak_dfs_kmeans_1_0.4/pred.json",
+          "bytes": 6684246,
+          "sha256": "6cf7d5244838eeca219dff0f00884363872ae74f1366e87dfe43c740fc1fbd64"
+        },
+        {
+          "path": "result/UCF_Crime_test/EGEBD_x2x3x4_r50_eff_split_out_th0.5_peak_dfs_kmedoids_1_0.4/dfs_coarse_scenes.json",
+          "bytes": 228103,
+          "sha256": "2d98853f30de3266fe412f5093fed470e31c93b63752d91f78ce4f130d3871f2"
+        },
+        {
+          "path": "result/UCF_Crime_test/EGEBD_x2x3x4_r50_eff_split_out_th0.5_peak_dfs_kmedoids_1_0.4/dfs_fine_scenes.json",
+          "bytes": 512127,
+          "sha256": "aa2e6776e2a6a7c9b1fd878366e939609bea757efd5b5c8d181d850d479f3a16"
+        },
+        {
+          "path": "result/UCF_Crime_test/EGEBD_x2x3x4_r50_eff_split_out_th0.5_peak_dfs_kmedoids_1_0.4/pred.json",
+          "bytes": 6684826,
+          "sha256": "93e7ac0ee13361a03b24f9a06e11e378ef5d8187ac5e634af44f9045043787f3"
+        },
+        {
+          "path": "result/XD_Violence_test/EGEBD_x2x3x4_r50_eff_split_th0.5/pred_scenes_th0.5.json",
+          "bytes": 19334000,
+          "sha256": "1e043f095f1a42fa2c0311a51ed66891f1089e81a99dedcd2494739adcda2323"
+        },
+        {
+          "path": "result/XD_Violence_test/EGEBD_x2x3x4_r50_eff_split_th0.5/scenes_th0.5.json",
+          "bytes": 1888129,
+          "sha256": "2d15e4af348bef11bda28744f9b92e2f1d3ac80f11f3a612cc2f49581eea372a"
+        },
+        {
+          "path": "result/XD_Violence_test/EGEBD_x2x3x4_r50_eff_split_th0.5_peak_dfs_kmeans_1_0.4/dfs_coarse_scenes.json",
+          "bytes": 1593541,
+          "sha256": "417ab2fb2a4c9b29cdf8301449b82edfc3a734fea2609c1d007e30413a8abb93"
+        },
+        {
+          "path": "result/XD_Violence_test/EGEBD_x2x3x4_r50_eff_split_th0.5_peak_dfs_kmeans_1_0.4/dfs_fine_scenes.json",
+          "bytes": 2879835,
+          "sha256": "5963ababc5dd3600186162c5ebf36903a751828ebcb5dd5899ef54c64cd08c03"
+        },
+        {
+          "path": "result/XD_Violence_test/EGEBD_x2x3x4_r50_eff_split_th0.5_peak_dfs_kmeans_1_0.4/pred.json",
+          "bytes": 17593729,
+          "sha256": "4a9165a1112b5242b91166e86da4708d3aafb8b035a25443567127cca755fd4f"
+        }
+      ]
+    },
+    {
+      "name": "step3-captions",
+      "asset": "vadtree-step3-captions.tar.gz",
+      "steps": [
+        3
+      ],
+      "required": true,
+      "stripped_cot": false,
+      "description": "LLaVA-Video-7B-Qwen2 node captions. Required to re-run step 4; greedy decoding, but re-running needs the 7B checkpoint and the videos.",
+      "bytes": 12522462,
+      "sha256": "c491aef7298b56d9995a05d7bb6bb8b69c394f86d58bba9332061ebf5f5abe5e",
+      "files": [
+        {
+          "path": "result/MSAD_test/EGEBD_x2x3x4_r50_eff_split_out_th0.5_peak_dfs_kmeans_1_0.3/LLaVA-Video-7B-Qwen2_msad_prior_q_coarse/maxf64_msad_prior_q_Below is a.json",
+          "bytes": 787812,
+          "sha256": "2ae97cd8d8faee5568b92f01866e6d4007ddaf5cdefceeaab3f194760feb5508"
+        },
+        {
+          "path": "result/MSAD_test/EGEBD_x2x3x4_r50_eff_split_out_th0.5_peak_dfs_kmeans_1_0.3/LLaVA-Video-7B-Qwen2_msad_prior_q_fine/maxf64_msad_prior_q_Below is a.json",
+          "bytes": 1742708,
+          "sha256": "2bbf30f4b9fa44274d728f6d24a2fc88f154845c811ebf5fab22ed78c6b8ca1f"
+        },
+        {
+          "path": "result/UCF_Crime_test/EGEBD_x2x3x4_r50_eff_split_out_th0.5_peak_dfs_kmeans_1_0.4/LLaVA-Video-7B-Qwen2_ucf_prior_q_coarse/maxf64_ucf_prior_q_Here is a .json",
+          "bytes": 2064568,
+          "sha256": "3a634b5790558e35a6e0f539752c4e4b4fd246a2499295a79bd07145a9bb80a3"
+        },
+        {
+          "path": "result/UCF_Crime_test/EGEBD_x2x3x4_r50_eff_split_out_th0.5_peak_dfs_kmeans_1_0.4/LLaVA-Video-7B-Qwen2_ucf_prior_q_fine/maxf64_ucf_prior_q_Here is a .json",
+          "bytes": 4888127,
+          "sha256": "7d4cc1a0ffc57b4d1528af0b7f345ed441d0869bfd8c604c0b6d51a5910543f4"
+        },
+        {
+          "path": "result/UCF_Crime_test/EGEBD_x2x3x4_r50_eff_split_out_th0.5_peak_dfs_kmedoids_1_0.4/LLaVA-Video-7B-Qwen2_ucf_prior_q_coarse/maxf64_ucf_prior_q_Here is a .json",
+          "bytes": 2196106,
+          "sha256": "41cde792727e03bb2d3006baf3d8bd924716672c4952ff2d18132ed668f467cd"
+        },
+        {
+          "path": "result/UCF_Crime_test/EGEBD_x2x3x4_r50_eff_split_out_th0.5_peak_dfs_kmedoids_1_0.4/LLaVA-Video-7B-Qwen2_ucf_prior_q_fine/maxf64_ucf_prior_q_Here is a .json",
+          "bytes": 4888127,
+          "sha256": "7d4cc1a0ffc57b4d1528af0b7f345ed441d0869bfd8c604c0b6d51a5910543f4"
+        },
+        {
+          "path": "result/XD_Violence_test/EGEBD_x2x3x4_r50_eff_split_th0.5_peak_dfs_kmeans_1_0.4/LLaVA-Video-7B-Qwen2_xd_prior_q_coarse/maxf64_xd_prior_q_To establi.json",
+          "bytes": 14933045,
+          "sha256": "0364e8c44fba1c8383d1e89f000ceb827dfb6a9223f99bcb4a0d48b7e6f209e8"
+        },
+        {
+          "path": "result/XD_Violence_test/EGEBD_x2x3x4_r50_eff_split_th0.5_peak_dfs_kmeans_1_0.4/LLaVA-Video-7B-Qwen2_xd_prior_q_fine/maxf64_xd_prior_q_To establi.json",
+          "bytes": 25793557,
+          "sha256": "18ef55007f0923a1ff5341b9dab57664de972cc95e6ed79d5007e69de38b18fa"
+        }
+      ]
+    },
+    {
+      "name": "step4-scores",
+      "asset": "vadtree-step4-scores.tar.gz",
+      "steps": [
+        4
+      ],
+      "required": true,
+      "stripped_cot": true,
+      "description": "DeepSeek-R1-Distill-Qwen-14B node scores with the chain-of-thought text stripped. Minimum input for steps 6-7. Sampled at temperature=0.6, so it can NOT be regenerated bit-identically.",
+      "bytes": 645315,
+      "sha256": "da5c84ae58551d5b1a2e5a27e7700d4a0513ec7598a08966cd85dd54d8052af0",
+      "files": [
+        {
+          "path": "result/MSAD_test/EGEBD_x2x3x4_r50_eff_split_out_th0.5_peak_dfs_kmeans_1_0.3/LLaVA-Video-7B-Qwen2_msad_prior_q_coarse/DeepSeek-R1-Distill-Qwen-14B_think/maxf64_msad_prior_q_Below is a.json",
+          "bytes": 77875,
+          "sha256": "3350d026ca1dab65c9d816fa87e818a6a463b72d93f6663e9c4039923f27b07a"
+        },
+        {
+          "path": "result/MSAD_test/EGEBD_x2x3x4_r50_eff_split_out_th0.5_peak_dfs_kmeans_1_0.3/LLaVA-Video-7B-Qwen2_msad_prior_q_fine/DeepSeek-R1-Distill-Qwen-14B_think/maxf64_msad_prior_q_Below is a.json",
+          "bytes": 180158,
+          "sha256": "515e961b816e3720dbb9a44170ceb322244cd24e8c6f692e0656fa0039b827bd"
+        },
+        {
+          "path": "result/UCF_Crime_test/EGEBD_x2x3x4_r50_eff_split_out_th0.5_peak_dfs_kmeans_1_0.4/LLaVA-Video-7B-Qwen2_ucf_prior_q_coarse/DeepSeek-R1-Distill-Qwen-14B_think/maxf64_ucf_prior_q_Here is a .json",
+          "bytes": 200328,
+          "sha256": "140547578b9b32890f3895de88f88bae5065c08a62353025d663c5c3c9f6c699"
+        },
+        {
+          "path": "result/UCF_Crime_test/EGEBD_x2x3x4_r50_eff_split_out_th0.5_peak_dfs_kmeans_1_0.4/LLaVA-Video-7B-Qwen2_ucf_prior_q_fine/DeepSeek-R1-Distill-Qwen-14B/maxf64_ucf_prior_q_Here is a .json",
+          "bytes": 571708,
+          "sha256": "ad85408cceaa217fb6cf03a910a333c0b1edeed14fec802845258775389db23d"
+        },
+        {
+          "path": "result/UCF_Crime_test/EGEBD_x2x3x4_r50_eff_split_out_th0.5_peak_dfs_kmeans_1_0.4/LLaVA-Video-7B-Qwen2_ucf_prior_q_fine/DeepSeek-R1-Distill-Qwen-14B_think/maxf64_ucf_prior_q_Here is a .json",
+          "bytes": 541384,
+          "sha256": "a0e9184898d53f517f27c260629bbb585c6a9151b9be065cfe82829cd948b039"
+        },
+        {
+          "path": "result/UCF_Crime_test/EGEBD_x2x3x4_r50_eff_split_out_th0.5_peak_dfs_kmedoids_1_0.4/LLaVA-Video-7B-Qwen2_ucf_prior_q_coarse/DeepSeek-R1-Distill-Qwen-14B_think/maxf64_ucf_prior_q_Here is a .json",
+          "bytes": 213870,
+          "sha256": "7e0853f7fd8b60e14271bcda2182fc68c94f84775b56137fffee5efa42253c05"
+        },
+        {
+          "path": "result/UCF_Crime_test/EGEBD_x2x3x4_r50_eff_split_out_th0.5_peak_dfs_kmedoids_1_0.4/LLaVA-Video-7B-Qwen2_ucf_prior_q_fine/DeepSeek-R1-Distill-Qwen-14B_think/maxf64_ucf_prior_q_Here is a .json",
+          "bytes": 541384,
+          "sha256": "a0e9184898d53f517f27c260629bbb585c6a9151b9be065cfe82829cd948b039"
+        },
+        {
+          "path": "result/XD_Violence_test/EGEBD_x2x3x4_r50_eff_split_th0.5_peak_dfs_kmeans_1_0.4/LLaVA-Video-7B-Qwen2_xd_prior_q_coarse/DeepSeek-R1-Distill-Qwen-14B_think/maxf64_xd_prior_q_To establi.json",
+          "bytes": 1699318,
+          "sha256": "69b314f1c3f7a4c137d0de6af82089b93faf27592179869c0ce11e1cce7744cd"
+        },
+        {
+          "path": "result/XD_Violence_test/EGEBD_x2x3x4_r50_eff_split_th0.5_peak_dfs_kmeans_1_0.4/LLaVA-Video-7B-Qwen2_xd_prior_q_fine/DeepSeek-R1-Distill-Qwen-14B_think/maxf64_xd_prior_q_To establi.json",
+          "bytes": 3183958,
+          "sha256": "ed34906296fe39396c0ab6c9da360fc0f5e2cf90b62c1541c4f89d7324a50869"
+        }
+      ]
+    },
+    {
+      "name": "step4-cot-archive",
+      "asset": "vadtree-step4-cot-archive.tar.gz",
+      "steps": [
+        4
+      ],
+      "required": false,
+      "stripped_cot": false,
+      "description": "The same step-4 files WITH the raw reasoning text (~95% dead weight). Optional, for inspection only.",
+      "bytes": 33860145,
+      "sha256": "b1fde1b879da09ab64d89692856624cbae1d19726f371847f934bb13e9defdbf",
+      "files": [
+        {
+          "path": "result/MSAD_test/EGEBD_x2x3x4_r50_eff_split_out_th0.5_peak_dfs_kmeans_1_0.3/LLaVA-Video-7B-Qwen2_msad_prior_q_coarse/DeepSeek-R1-Distill-Qwen-14B_think/maxf64_msad_prior_q_Below is a.json",
+          "bytes": 1412557,
+          "sha256": "844cd665558905e0f936dc3d3839aa3d45c6e0a026d3f1ca32d9c56e6e63e27b"
+        },
+        {
+          "path": "result/MSAD_test/EGEBD_x2x3x4_r50_eff_split_out_th0.5_peak_dfs_kmeans_1_0.3/LLaVA-Video-7B-Qwen2_msad_prior_q_fine/DeepSeek-R1-Distill-Qwen-14B_think/maxf64_msad_prior_q_Below is a.json",
+          "bytes": 3578397,
+          "sha256": "1394aa307468fba7045e27e3bce6436285b56f358bc7cc130eb49a9cb7a9c3f8"
+        },
+        {
+          "path": "result/UCF_Crime_test/EGEBD_x2x3x4_r50_eff_split_out_th0.5_peak_dfs_kmeans_1_0.4/LLaVA-Video-7B-Qwen2_ucf_prior_q_coarse/DeepSeek-R1-Distill-Qwen-14B_think/maxf64_ucf_prior_q_Here is a .json",
+          "bytes": 4022746,
+          "sha256": "0a67e52a51a380b651081bc362a74dffee1ec5c9187bbe437982cc1819312887"
+        },
+        {
+          "path": "result/UCF_Crime_test/EGEBD_x2x3x4_r50_eff_split_out_th0.5_peak_dfs_kmeans_1_0.4/LLaVA-Video-7B-Qwen2_ucf_prior_q_fine/DeepSeek-R1-Distill-Qwen-14B/maxf64_ucf_prior_q_Here is a .json",
+          "bytes": 655326,
+          "sha256": "e2786c1a2d8b849336dceff9a1a914ec915128d71f61688dc926469dbdaf5a09"
+        },
+        {
+          "path": "result/UCF_Crime_test/EGEBD_x2x3x4_r50_eff_split_out_th0.5_peak_dfs_kmeans_1_0.4/LLaVA-Video-7B-Qwen2_ucf_prior_q_fine/DeepSeek-R1-Distill-Qwen-14B_think/maxf64_ucf_prior_q_Here is a .json",
+          "bytes": 11050401,
+          "sha256": "67b4369c3bbfc98c24c321454a41941e69abad862c313d3f5f81b34339eb3fb5"
+        },
+        {
+          "path": "result/UCF_Crime_test/EGEBD_x2x3x4_r50_eff_split_out_th0.5_peak_dfs_kmedoids_1_0.4/LLaVA-Video-7B-Qwen2_ucf_prior_q_coarse/DeepSeek-R1-Distill-Qwen-14B_think/maxf64_ucf_prior_q_Here is a .json",
+          "bytes": 4287749,
+          "sha256": "948e5031dd8250d409f20c99dce6c640eb12039eed4d7685c684e187b1a2681a"
+        },
+        {
+          "path": "result/UCF_Crime_test/EGEBD_x2x3x4_r50_eff_split_out_th0.5_peak_dfs_kmedoids_1_0.4/LLaVA-Video-7B-Qwen2_ucf_prior_q_fine/DeepSeek-R1-Distill-Qwen-14B_think/maxf64_ucf_prior_q_Here is a .json",
+          "bytes": 11050401,
+          "sha256": "67b4369c3bbfc98c24c321454a41941e69abad862c313d3f5f81b34339eb3fb5"
+        },
+        {
+          "path": "result/XD_Violence_test/EGEBD_x2x3x4_r50_eff_split_th0.5_peak_dfs_kmeans_1_0.4/LLaVA-Video-7B-Qwen2_xd_prior_q_coarse/DeepSeek-R1-Distill-Qwen-14B_think/maxf64_xd_prior_q_To establi.json",
+          "bytes": 36152776,
+          "sha256": "445bf548397ded30b644421d5014f6f48b890733bc2033fd566826baaa96b3b1"
+        },
+        {
+          "path": "result/XD_Violence_test/EGEBD_x2x3x4_r50_eff_split_th0.5_peak_dfs_kmeans_1_0.4/LLaVA-Video-7B-Qwen2_xd_prior_q_fine/DeepSeek-R1-Distill-Qwen-14B_think/maxf64_xd_prior_q_To establi.json",
+          "bytes": 68008921,
+          "sha256": "aa08020be9178fbe4f4eb4649838d8a09734f7ad41c492e45e1b09adf48241e5"
+        }
+      ]
+    },
+    {
+      "name": "step5-similarity",
+      "asset": "vadtree-step5-similarity.tar.gz",
+      "steps": [
+        5
+      ],
+      "required": true,
+      "stripped_cot": false,
+      "description": "ImageBind VxT/TxV/VxV/TxT similarity caches. Step 6 needs them; rebuilding costs GPU hours and the videos.",
+      "bytes": 95458405,
+      "sha256": "a8e22d0b0a2d1b918f35711bd0203af36d31bc6888a0cba674fe541e6a0ab84a",
+      "files": [
+        {
+          "path": "result/MSAD_test/EGEBD_x2x3x4_r50_eff_split_out_th0.5_peak_dfs_kmeans_1_0.3/LLaVA-Video-7B-Qwen2_msad_prior_q_coarse/sim_maxf64_msad_prior_q_Below is a.pkl",
+          "bytes": 6809724,
+          "sha256": "80a1d9c0581da03ae2a0e95f30552867d36753b79e942b8e0f6acdeef027058d"
+        },
+        {
+          "path": "result/MSAD_test/EGEBD_x2x3x4_r50_eff_split_out_th0.5_peak_dfs_kmeans_1_0.3/LLaVA-Video-7B-Qwen2_msad_prior_q_fine/sim_maxf64_msad_prior_q_Below is a.pkl",
+          "bytes": 17721351,
+          "sha256": "f34af06b89a5a5c597681c703e04be076c2cb991a494b106a365362f769894d1"
+        },
+        {
+          "path": "result/UCF_Crime_test/EGEBD_x2x3x4_r50_eff_split_out_th0.5_peak_dfs_kmeans_1_0.4/LLaVA-Video-7B-Qwen2_ucf_prior_q_coarse/sim_maxf64_ucf_prior_q_Here is a .pkl",
+          "bytes": 19566587,
+          "sha256": "12250f382f4931765fa2d519ab903ebdf4f1969ca0ed13c02dbb2e39618f42a0"
+        },
+        {
+          "path": "result/UCF_Crime_test/EGEBD_x2x3x4_r50_eff_split_out_th0.5_peak_dfs_kmeans_1_0.4/LLaVA-Video-7B-Qwen2_ucf_prior_q_fine/sim_maxf64_ucf_prior_q_Here is a .pkl",
+          "bytes": 63517858,
+          "sha256": "af863bdd479b25a08368c1e13364403ab14255d8551832be36251ba03924f2d2"
+        },
+        {
+          "path": "result/UCF_Crime_test/EGEBD_x2x3x4_r50_eff_split_out_th0.5_peak_dfs_kmedoids_1_0.4/LLaVA-Video-7B-Qwen2_ucf_prior_q_coarse/sim_maxf64_ucf_prior_q_Here is a .pkl",
+          "bytes": 21190264,
+          "sha256": "77cc10f1f546ccb89ac5e5678bfca133234613f403feb595311a7b26928b9c1b"
+        },
+        {
+          "path": "result/UCF_Crime_test/EGEBD_x2x3x4_r50_eff_split_out_th0.5_peak_dfs_kmedoids_1_0.4/LLaVA-Video-7B-Qwen2_ucf_prior_q_fine/sim_maxf64_ucf_prior_q_Here is a .pkl",
+          "bytes": 63517858,
+          "sha256": "4a81156c92d795a270eba7d77816cab31fc74458628431505c14934a58967af6"
+        },
+        {
+          "path": "result/XD_Violence_test/EGEBD_x2x3x4_r50_eff_split_th0.5_peak_dfs_kmeans_1_0.4/LLaVA-Video-7B-Qwen2_xd_prior_q_coarse/sim_maxf64_xd_prior_q_To establi.pkl",
+          "bytes": 16393594,
+          "sha256": "b4edf50ad1b8560bf9f26d4f5d778a5509deb49d929f9ffa8a7154c1b1022987"
+        },
+        {
+          "path": "result/XD_Violence_test/EGEBD_x2x3x4_r50_eff_split_th0.5_peak_dfs_kmeans_1_0.4/LLaVA-Video-7B-Qwen2_xd_prior_q_fine/sim_maxf64_xd_prior_q_To establi.pkl",
+          "bytes": 61837634,
+          "sha256": "97ab48005535084511b65613fe9e3f421ab8c468bdc259cd689900b2a12235ee"
+        }
+      ]
+    },
+    {
+      "name": "step6-7-refined-ensemble",
+      "asset": "vadtree-step6-7-refined-ensemble.tar.gz",
+      "steps": [
+        6,
+        7
+      ],
+      "required": false,
+      "stripped_cot": true,
+      "description": "Refined and inter-cluster ensemble scores (chain-of-thought stripped). Deterministic CPU output of steps 4 + 5, shipped for convenience.",
+      "bytes": 1726505,
+      "sha256": "3d98233d8fdcf27f013d88df35e608f4376d2ea9caaea35c276e316fd5738907",
+      "files": [
+        {
+          "path": "result/MSAD_test/EGEBD_x2x3x4_r50_eff_split_out_th0.5_peak_dfs_kmeans_1_0.3/LLaVA-Video-7B-Qwen2_msad_prior_q_coarse/DeepSeek-R1-Distill-Qwen-14B_think_VxV10_nn10_tao0.1/refine_maxf64_msad_prior_q_Below is a.json",
+          "bytes": 99526,
+          "sha256": "1e332282a501a60c61cf9c2fc41c9034008d30d394ac37c9593de3a15a7d8892"
+        },
+        {
+          "path": "result/MSAD_test/EGEBD_x2x3x4_r50_eff_split_out_th0.5_peak_dfs_kmeans_1_0.3/LLaVA-Video-7B-Qwen2_msad_prior_q_coarse/DeepSeek-R1-Distill-Qwen-14B_think_VxV10_nn10_tao0.1_ENSE_EX234R50ES0.5_peak_dfs_kmeans_1_0.3_LV7Q_msad_prior_q_fine_DRDQ14_think_VxV10_nn10_tao0.1_beat-0.4/ense_refine_maxf64_msad_prior_q_Below is a.json",
+          "bytes": 2757118,
+          "sha256": "4d7e203c83f10d36336d697e80fbaa7376271f5858d25ea920ca4236f7e684a8"
+        },
+        {
+          "path": "result/MSAD_test/EGEBD_x2x3x4_r50_eff_split_out_th0.5_peak_dfs_kmeans_1_0.3/LLaVA-Video-7B-Qwen2_msad_prior_q_fine/DeepSeek-R1-Distill-Qwen-14B_think_VxV10_nn10/refine_maxf64_msad_prior_q_Below is a.json",
+          "bytes": 231497,
+          "sha256": "28e1c5bb53fcaf2914f15a2e7a2170b52190f14d02d6446305112f8aa93266a6"
+        },
+        {
+          "path": "result/MSAD_test/EGEBD_x2x3x4_r50_eff_split_out_th0.5_peak_dfs_kmeans_1_0.3/LLaVA-Video-7B-Qwen2_msad_prior_q_fine/DeepSeek-R1-Distill-Qwen-14B_think_VxV10_nn10_tao0.1/refine_maxf64_msad_prior_q_Below is a.json",
+          "bytes": 231548,
+          "sha256": "f6e796375ec1b5b5b3830008b46f0f85502073145aa40d180c8d559efd05b946"
+        },
+        {
+          "path": "result/UCF_Crime_test/EGEBD_x2x3x4_r50_eff_split_out_th0.5_peak_dfs_kmeans_1_0.4/LLaVA-Video-7B-Qwen2_ucf_prior_q_coarse/DeepSeek-R1-Distill-Qwen-14B_think_VxV10_nn10/refine_maxf64_ucf_prior_q_Here is a .json",
+          "bytes": 253840,
+          "sha256": "1161928bfb1bc4bf264ea6c880e648c945d4af02ad8899e51100bb450c458f29"
+        },
+        {
+          "path": "result/UCF_Crime_test/EGEBD_x2x3x4_r50_eff_split_out_th0.5_peak_dfs_kmeans_1_0.4/LLaVA-Video-7B-Qwen2_ucf_prior_q_coarse/DeepSeek-R1-Distill-Qwen-14B_think_VxV10_nn10_tao0.1/refine_maxf64_ucf_prior_q_Here is a .json",
+          "bytes": 255084,
+          "sha256": "efbf4fc8ef66bc8b1cbe69d28ead204fad3534099b826986b46abb164ee5ae90"
+        },
+        {
+          "path": "result/UCF_Crime_test/EGEBD_x2x3x4_r50_eff_split_out_th0.5_peak_dfs_kmeans_1_0.4/LLaVA-Video-7B-Qwen2_ucf_prior_q_coarse/DeepSeek-R1-Distill-Qwen-14B_think_VxV10_nn10_tao0.1_ENSE_EX234R50ES0.5_peak_dfs_kmeans_1_0.4_LV7Q_ucf_prior_q_DRDQ14_think_VxV10_nn10_tao0.1_beat0.2/ense_refine_maxf64_ucf_prior_q_Here is a .json",
+          "bytes": 21546736,
+          "sha256": "a8bf00c000dcb1b7de474d5979f7174c9a0522d045dddfad6a1558f092261601"
+        },
+        {
+          "path": "result/UCF_Crime_test/EGEBD_x2x3x4_r50_eff_split_out_th0.5_peak_dfs_kmeans_1_0.4/LLaVA-Video-7B-Qwen2_ucf_prior_q_coarse/DeepSeek-R1-Distill-Qwen-14B_think_VxV10_nn10_tao0.1_ENSE_EX234R50ES0.5_peak_dfs_kmeans_1_0.4_LV7Q_ucf_prior_q_fine_DRDQ14_think_VxV10_nn10_tao0.1_beat0.2/ense_refine_maxf64_ucf_prior_q_Here is a .json",
+          "bytes": 21546277,
+          "sha256": "9d996db7135eee6eda2b1129c950ec65dab161bb0bd48e3f3ecea6ee9bae0f28"
+        },
+        {
+          "path": "result/UCF_Crime_test/EGEBD_x2x3x4_r50_eff_split_out_th0.5_peak_dfs_kmeans_1_0.4/LLaVA-Video-7B-Qwen2_ucf_prior_q_fine/DeepSeek-R1-Distill-Qwen-14B_VxV10_nn10_tao0.1/refine_maxf64_ucf_prior_q_Here is a .json",
+          "bytes": 720210,
+          "sha256": "e770d8f1bec5fa8b86e20819da645e5eb1853e5ee5fa4f8ca6c46b6cdbb2dfef"
+        },
+        {
+          "path": "result/UCF_Crime_test/EGEBD_x2x3x4_r50_eff_split_out_th0.5_peak_dfs_kmeans_1_0.4/LLaVA-Video-7B-Qwen2_ucf_prior_q_fine/DeepSeek-R1-Distill-Qwen-14B_think_VxV10_nn10_tao0.1/refine_maxf64_ucf_prior_q_Here is a .json",
+          "bytes": 690541,
+          "sha256": "7e0ce6e78fb64a438c34be500bf0ee2537330591e147b0b0a06338faf37a5ee9"
+        },
+        {
+          "path": "result/UCF_Crime_test/EGEBD_x2x3x4_r50_eff_split_out_th0.5_peak_dfs_kmedoids_1_0.4/LLaVA-Video-7B-Qwen2_ucf_prior_q_coarse/DeepSeek-R1-Distill-Qwen-14B_think_VxV10_nn10_tao0.1/refine_maxf64_ucf_prior_q_Here is a .json",
+          "bytes": 272716,
+          "sha256": "603f3953349bc662546071caed9431d4cc17672fa532f79e7befd5721eb96736"
+        },
+        {
+          "path": "result/UCF_Crime_test/EGEBD_x2x3x4_r50_eff_split_out_th0.5_peak_dfs_kmedoids_1_0.4/LLaVA-Video-7B-Qwen2_ucf_prior_q_coarse/DeepSeek-R1-Distill-Qwen-14B_think_VxV10_nn10_tao0.1_ENSE_EX234R50ES0.5_peak_dfs_kmedoids_1_0.4_LV7Q_ucf_prior_q_fine_DRDQ14_think_VxV10_nn10_tao0.1_beat0.3/ense_refine_maxf64_ucf_prior_q_Here is a .json",
+          "bytes": 21568538,
+          "sha256": "e88bfcfc4d0f431ce2e17f9f5b6fac184a4870904eb74cab2dd97bf3ef9c749b"
+        },
+        {
+          "path": "result/UCF_Crime_test/EGEBD_x2x3x4_r50_eff_split_out_th0.5_peak_dfs_kmedoids_1_0.4/LLaVA-Video-7B-Qwen2_ucf_prior_q_fine/DeepSeek-R1-Distill-Qwen-14B_think_VxV10_nn10_tao0.1/refine_maxf64_ucf_prior_q_Here is a .json",
+          "bytes": 691936,
+          "sha256": "ed83269a815eb18e21d378c3c57aad2f6199df8029355fbd06850b32a4451784"
+        },
+        {
+          "path": "result/UCF_Crime_test/EGEBD_x2x3x4_r50_eff_split_out_th0.5_peak_dfs_kmedoids_1_0.4/LLaVA-Video-7B-Qwen2_ucf_prior_q_fine/DeepSeek-R1-Distill-Qwen-14B_think_VxV10_nn10_tao0.1_ENSE_EX234R50ES0.5_peak_dfs_kmeans_1_0.4_LV7Q_ucf_prior_q_coarse_DRDQ14_think_VxV10_nn15_tao0.1/ense_refine_maxf64_ucf_prior_q_Here is a .json",
+          "bytes": 24059796,
+          "sha256": "c168eeec1326068dd96d7a0a6d3461ff9cc34f39ed8ca7b4863d5847422bf47b"
+        },
+        {
+          "path": "result/XD_Violence_test/EGEBD_x2x3x4_r50_eff_split_th0.5_peak_dfs_kmeans_1_0.4/LLaVA-Video-7B-Qwen2_xd_prior_q_coarse/DeepSeek-R1-Distill-Qwen-14B_think_VxV15_nn15_dyn_r0.3_tao0.1/refine_maxf64_xd_prior_q_To establi.json",
+          "bytes": 2170744,
+          "sha256": "f2d28a7075d0af8d9b898e0d32a2aef1443a44eeef81f58b4e6be9954c50e696"
+        },
+        {
+          "path": "result/XD_Violence_test/EGEBD_x2x3x4_r50_eff_split_th0.5_peak_dfs_kmeans_1_0.4/LLaVA-Video-7B-Qwen2_xd_prior_q_coarse/DeepSeek-R1-Distill-Qwen-14B_think_VxV15_nn15_dyn_r0.3_tao0.1_ENSE_EGEBD_x2x3x4_r50_eff_split_th0.5_peak_dfs_kmeans_1_0.4_LV7Q_xd_prior_q_fine_DRDQ14_think_VxV15_nn15_dyn_r0.3_tao0.1_beat0.7/ense_refine_maxf64_xd_prior_q_To establi.json",
+          "bytes": 45646145,
+          "sha256": "7544ceba3e602e7d92dba491b135bc4aec5fc6b99f69ad319bae9322c6739a97"
+        },
+        {
+          "path": "result/XD_Violence_test/EGEBD_x2x3x4_r50_eff_split_th0.5_peak_dfs_kmeans_1_0.4/LLaVA-Video-7B-Qwen2_xd_prior_q_fine/DeepSeek-R1-Distill-Qwen-14B_think_VxV15_nn15_dyn_r0.3_tao0.1/refine_maxf64_xd_prior_q_To establi.json",
+          "bytes": 4075927,
+          "sha256": "808fa9ff872282e5ae6e42553d36682e260d638350e75b8835c9321cc4118256"
+        }
+      ]
+    },
+    {
+      "name": "eval-metrics",
+      "asset": "vadtree-eval-metrics.tar.gz",
+      "steps": [],
+      "required": true,
+      "stripped_cot": false,
+      "description": "Per-run metric summaries (00vid_metric.json). Small; also tracked in git.",
+      "bytes": 1430386,
+      "sha256": "e1944ee04538991cca46eeaefbd51f06aa439e2d7689081a38ddfceb091f5891",
+      "files": [
+        {
+          "path": "result/MSAD_test/EGEBD_x2x3x4_r50_eff_split_out_th0.5_peak_dfs_kmeans_1_0.3/LLaVA-Video-7B-Qwen2_msad_prior_q_coarse/DeepSeek-R1-Distill-Qwen-14B_think_VxV10_nn10_tao0.1/00vid_metric.json",
+          "bytes": 40458,
+          "sha256": "c5e26a8aa20f9b2eee0b3c201686f4edaa2a60c0da522f6bfca976ae89b9807b"
+        },
+        {
+          "path": "result/MSAD_test/EGEBD_x2x3x4_r50_eff_split_out_th0.5_peak_dfs_kmeans_1_0.3/LLaVA-Video-7B-Qwen2_msad_prior_q_coarse/DeepSeek-R1-Distill-Qwen-14B_think_VxV10_nn10_tao0.1/refine_vid_metric_maxf64_msad_prior_q_Below is a.json",
+          "bytes": 1434225,
+          "sha256": "9565cbc153398d4422de776ac95f7ad62258d95a4ec7c2965e92a751dd0a7965"
+        },
+        {
+          "path": "result/MSAD_test/EGEBD_x2x3x4_r50_eff_split_out_th0.5_peak_dfs_kmeans_1_0.3/LLaVA-Video-7B-Qwen2_msad_prior_q_coarse/DeepSeek-R1-Distill-Qwen-14B_think_VxV10_nn10_tao0.1_ENSE_EX234R50ES0.5_peak_dfs_kmeans_1_0.3_LV7Q_msad_prior_q_fine_DRDQ14_think_VxV10_nn10_tao0.1_beat-0.4/00vid_metric.json",
+          "bytes": 41254,
+          "sha256": "6c95c027cd8e8337bc9b8b42c325d5143cffff66eed2ebb01a532ad27aa8cc58"
+        },
+        {
+          "path": "result/MSAD_test/EGEBD_x2x3x4_r50_eff_split_out_th0.5_peak_dfs_kmeans_1_0.3/LLaVA-Video-7B-Qwen2_msad_prior_q_fine/DeepSeek-R1-Distill-Qwen-14B_think_VxV10_nn10/00vid_metric.json",
+          "bytes": 40562,
+          "sha256": "a08d13f5fae68a9bad711a12c04fdd71224cab3e02a90890496a9bda8a1d5c9e"
+        },
+        {
+          "path": "result/MSAD_test/EGEBD_x2x3x4_r50_eff_split_out_th0.5_peak_dfs_kmeans_1_0.3/LLaVA-Video-7B-Qwen2_msad_prior_q_fine/DeepSeek-R1-Distill-Qwen-14B_think_VxV10_nn10_tao0.1/00vid_metric.json",
+          "bytes": 40599,
+          "sha256": "3205c819a749cf7a30e409520a201f04c5a0ff64eb8fa978f06648099cc7d088"
+        },
+        {
+          "path": "result/MSAD_test/EGEBD_x2x3x4_r50_eff_split_out_th0.5_peak_dfs_kmeans_1_0.3/LLaVA-Video-7B-Qwen2_msad_prior_q_fine/DeepSeek-R1-Distill-Qwen-14B_think_VxV10_nn10_tao0.1/refine_vid_metric_maxf64_msad_prior_q_Below is a.json",
+          "bytes": 3629803,
+          "sha256": "d2f1e34744d9608295c857a48a68008988a407ce3eae863b0254c8a4601896e3"
+        },
+        {
+          "path": "result/UCF_Crime_test/EGEBD_x2x3x4_r50_eff_split_out_th0.5_peak_dfs_kmeans_1_0.4/LLaVA-Video-7B-Qwen2_ucf_prior_q_coarse/DeepSeek-R1-Distill-Qwen-14B_think/00vid_metric.json",
+          "bytes": 47427,
+          "sha256": "9f0dd0c1ff426f12ab265691e4322cf5786bfef93d47dde4316e8c9fc98d9364"
+        },
+        {
+          "path": "result/UCF_Crime_test/EGEBD_x2x3x4_r50_eff_split_out_th0.5_peak_dfs_kmeans_1_0.4/LLaVA-Video-7B-Qwen2_ucf_prior_q_coarse/DeepSeek-R1-Distill-Qwen-14B_think_VxV10_nn10/00vid_metric.json",
+          "bytes": 47752,
+          "sha256": "d40c4a239732b13b53e285c9e662e9483b0685325b076b70551a84fff51090c6"
+        },
+        {
+          "path": "result/UCF_Crime_test/EGEBD_x2x3x4_r50_eff_split_out_th0.5_peak_dfs_kmeans_1_0.4/LLaVA-Video-7B-Qwen2_ucf_prior_q_coarse/DeepSeek-R1-Distill-Qwen-14B_think_VxV10_nn10_tao0.1/00vid_metric.json",
+          "bytes": 48979,
+          "sha256": "cf800d05ac02bdc234defd0e1237b40c395a000f2f4b69bd4a64db37fad2c958"
+        },
+        {
+          "path": "result/UCF_Crime_test/EGEBD_x2x3x4_r50_eff_split_out_th0.5_peak_dfs_kmeans_1_0.4/LLaVA-Video-7B-Qwen2_ucf_prior_q_coarse/DeepSeek-R1-Distill-Qwen-14B_think_VxV10_nn10_tao0.1_ENSE_EX234R50ES0.5_peak_dfs_kmeans_1_0.4_LV7Q_ucf_prior_q_DRDQ14_think_VxV10_nn10_tao0.1_beat0.2/00vid_metric.json",
+          "bytes": 49896,
+          "sha256": "5ebf3c223533bb7553242fc36f01952ac848bf9d7d4c2462276bd2901cfd3e24"
+        },
+        {
+          "path": "result/UCF_Crime_test/EGEBD_x2x3x4_r50_eff_split_out_th0.5_peak_dfs_kmeans_1_0.4/LLaVA-Video-7B-Qwen2_ucf_prior_q_coarse/DeepSeek-R1-Distill-Qwen-14B_think_VxV10_nn10_tao0.1_ENSE_EX234R50ES0.5_peak_dfs_kmeans_1_0.4_LV7Q_ucf_prior_q_fine_DRDQ14_think_VxV10_nn10_tao0.1_beat0.2/00vid_metric.json",
+          "bytes": 49437,
+          "sha256": "c3446ded33678ebc45e12b5f217665f32ab01bba4ad93e0b11e17c3be5bd3bac"
+        },
+        {
+          "path": "result/UCF_Crime_test/EGEBD_x2x3x4_r50_eff_split_out_th0.5_peak_dfs_kmeans_1_0.4/LLaVA-Video-7B-Qwen2_ucf_prior_q_fine/DeepSeek-R1-Distill-Qwen-14B/00vid_metric.json",
+          "bytes": 48866,
+          "sha256": "fd82a3e7e925c8804b5c8c064c1ab0ce4e010fba744bc57a19b53b6b8363f4cb"
+        },
+        {
+          "path": "result/UCF_Crime_test/EGEBD_x2x3x4_r50_eff_split_out_th0.5_peak_dfs_kmeans_1_0.4/LLaVA-Video-7B-Qwen2_ucf_prior_q_fine/DeepSeek-R1-Distill-Qwen-14B_VxV10_nn10_tao0.1/00vid_metric.json",
+          "bytes": 49176,
+          "sha256": "df475187da9f3bfb02ea8e481e7bfe6ba714f7609d162592b205b2f285c359ee"
+        },
+        {
+          "path": "result/UCF_Crime_test/EGEBD_x2x3x4_r50_eff_split_out_th0.5_peak_dfs_kmeans_1_0.4/LLaVA-Video-7B-Qwen2_ucf_prior_q_fine/DeepSeek-R1-Distill-Qwen-14B_think/00vid_metric.json",
+          "bytes": 49042,
+          "sha256": "a96721a7cd440183ee667c5e5fd99276a01b87432c796c976ee9b820f0afd17e"
+        },
+        {
+          "path": "result/UCF_Crime_test/EGEBD_x2x3x4_r50_eff_split_out_th0.5_peak_dfs_kmeans_1_0.4/LLaVA-Video-7B-Qwen2_ucf_prior_q_fine/DeepSeek-R1-Distill-Qwen-14B_think_VxV10_nn10_tao0.1/00vid_metric.json",
+          "bytes": 47945,
+          "sha256": "6475c40d9c132595731e8df05ae8235016a6231126206e39f867bae9b1d6cee6"
+        },
+        {
+          "path": "result/UCF_Crime_test/EGEBD_x2x3x4_r50_eff_split_out_th0.5_peak_dfs_kmedoids_1_0.4/LLaVA-Video-7B-Qwen2_ucf_prior_q_coarse/DeepSeek-R1-Distill-Qwen-14B_think/00vid_metric.json",
+          "bytes": 48860,
+          "sha256": "3065ecdde3fb5a2b02a0e85e90df0ffbf25c4cbd63b1c508d0cf26dd17fa4e56"
+        },
+        {
+          "path": "result/UCF_Crime_test/EGEBD_x2x3x4_r50_eff_split_out_th0.5_peak_dfs_kmedoids_1_0.4/LLaVA-Video-7B-Qwen2_ucf_prior_q_coarse/DeepSeek-R1-Distill-Qwen-14B_think_VxV10_nn10_tao0.1/maxf64_ucf_prior_q_Here is a _00vid_metric.json.json",
+          "bytes": 49215,
+          "sha256": "d66dec822323195fc01bd2ff664aef71deee145056104af3f7069882adc948d0"
+        },
+        {
+          "path": "result/UCF_Crime_test/EGEBD_x2x3x4_r50_eff_split_out_th0.5_peak_dfs_kmedoids_1_0.4/LLaVA-Video-7B-Qwen2_ucf_prior_q_coarse/DeepSeek-R1-Distill-Qwen-14B_think_VxV10_nn10_tao0.1_ENSE_EX234R50ES0.5_peak_dfs_kmedoids_1_0.4_LV7Q_ucf_prior_q_fine_DRDQ14_think_VxV10_nn10_tao0.1_beat0.3/00vid_metric.json",
+          "bytes": 49930,
+          "sha256": "0e9a28393e2928316d52aac0cf1dfb4e319295b2eb9e2907c9d080e47b4be745"
+        },
+        {
+          "path": "result/UCF_Crime_test/EGEBD_x2x3x4_r50_eff_split_out_th0.5_peak_dfs_kmedoids_1_0.4/LLaVA-Video-7B-Qwen2_ucf_prior_q_fine/DeepSeek-R1-Distill-Qwen-14B_think/00vid_metric.json",
+          "bytes": 47650,
+          "sha256": "2a65b9d4caacac9c5ab29e5e745533c346e26d77258ade573b35a904a90737ab"
+        },
+        {
+          "path": "result/UCF_Crime_test/EGEBD_x2x3x4_r50_eff_split_out_th0.5_peak_dfs_kmedoids_1_0.4/LLaVA-Video-7B-Qwen2_ucf_prior_q_fine/DeepSeek-R1-Distill-Qwen-14B_think_VxV10_nn10_tao0.1/00vid_metric.json",
+          "bytes": 49340,
+          "sha256": "8560b86a0cc0d0879152f8e5224e8d6fee6e4213e0304652c8d4552c37cf133d"
+        },
+        {
+          "path": "result/UCF_Crime_test/EGEBD_x2x3x4_r50_eff_split_out_th0.5_peak_dfs_kmedoids_1_0.4/LLaVA-Video-7B-Qwen2_ucf_prior_q_fine/DeepSeek-R1-Distill-Qwen-14B_think_VxV10_nn10_tao0.1_ENSE_EX234R50ES0.5_peak_dfs_kmeans_1_0.4_LV7Q_ucf_prior_q_coarse_DRDQ14_think_VxV10_nn15_tao0.1/00vid_metric.json",
+          "bytes": 48239,
+          "sha256": "a9722a87c8e74ce7d41d7eafaadf6e96809f8e63d6712ae30132a0b4eb489186"
+        },
+        {
+          "path": "result/XD_Violence_test/EGEBD_x2x3x4_r50_eff_split_th0.5_peak_dfs_kmeans_1_0.4/LLaVA-Video-7B-Qwen2_xd_prior_q_coarse/DeepSeek-R1-Distill-Qwen-14B_think/00vid_metric.json",
+          "bytes": 148425,
+          "sha256": "14e83e677bece3eb4f3a76710f8cde5f1b7718943bcdb32ec6fb34938820858b"
+        },
+        {
+          "path": "result/XD_Violence_test/EGEBD_x2x3x4_r50_eff_split_th0.5_peak_dfs_kmeans_1_0.4/LLaVA-Video-7B-Qwen2_xd_prior_q_coarse/DeepSeek-R1-Distill-Qwen-14B_think_VxV15_nn15_dyn_r0.3_tao0.1/00vid_metric.json",
+          "bytes": 148172,
+          "sha256": "ef824b73da337089924551447ab9ea2c5775140e116c5168b6a22c3b75b14f93"
+        },
+        {
+          "path": "result/XD_Violence_test/EGEBD_x2x3x4_r50_eff_split_th0.5_peak_dfs_kmeans_1_0.4/LLaVA-Video-7B-Qwen2_xd_prior_q_coarse/DeepSeek-R1-Distill-Qwen-14B_think_VxV15_nn15_dyn_r0.3_tao0.1_ENSE_EGEBD_x2x3x4_r50_eff_split_th0.5_peak_dfs_kmeans_1_0.4_LV7Q_xd_prior_q_fine_DRDQ14_think_VxV15_nn15_dyn_r0.3_tao0.1_beat0.7/00vid_metric.json",
+          "bytes": 149584,
+          "sha256": "6a62e3346eae96c5796dc3cbc4e37669f9eb2dda981403bffcde86e10f2c299f"
+        },
+        {
+          "path": "result/XD_Violence_test/EGEBD_x2x3x4_r50_eff_split_th0.5_peak_dfs_kmeans_1_0.4/LLaVA-Video-7B-Qwen2_xd_prior_q_fine/DeepSeek-R1-Distill-Qwen-14B_think/00vid_metric.json",
+          "bytes": 147968,
+          "sha256": "bf46b650e98012bac659bc087ea5a6a5a87257988386c7a65853874edd2080c6"
+        },
+        {
+          "path": "result/XD_Violence_test/EGEBD_x2x3x4_r50_eff_split_th0.5_peak_dfs_kmeans_1_0.4/LLaVA-Video-7B-Qwen2_xd_prior_q_fine/DeepSeek-R1-Distill-Qwen-14B_think_VxV15_nn15_dyn_r0.3_tao0.1/00vid_metric.json",
+          "bytes": 148247,
+          "sha256": "8747e636a989643c477afbd25c17c82846044a76a8ef5736087ea621a1cc0a07"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,36 @@
+# IDEs
+.vscode/
+.idea/
+
+# Model weights / checkpoints / large binaries
+.checkpoints/
+siglip-so400m-patch14-384/
+
+weights/
+*.pth
+*.pt
+*.ckpt
+*.bin
+*.h5
+*.npz
+*.npy
+
+#
+paper_result/
+
+# Experiment artifacts
+# A full run writes ~800 MB into result/ (split scores, JSON chain-of-thought
+# traces, ImageBind matrices). Those files are published as GitHub Release
+# assets instead of being committed; restore them with:
+#     python scripts/fetch_artifacts.py
+# Only the small metric summaries stay in git so the numbers remain greppable.
+/result/**
+!/result/**/
+!/result/**/*metric*.json
+
+# Download cache used by scripts/fetch_artifacts.py
+/dist/
+
+# Python bytecode
+__pycache__/
+*.pyc
