@@ -42,3 +42,6 @@ __pycache__/
 /webui/dist/
 /server/__pycache__/
 *.tsbuildinfo
+
+# Sandboxed pipeline jobs
+/runs/
