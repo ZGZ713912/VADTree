@@ -122,7 +122,7 @@ The server binds to 127.0.0.1 and has no authentication; it is a single-user loc
 | Pipeline | Seven stages with real verification state; steps 2/6/7 run into runs/&lt;job-id&gt;/ and stream logs. |
 | Archive | MANIFEST bundles, local environment, and the reproduction checks recorded by scripts/reproduce.py. |
 
-The UI intentionally shows uncertainty: XD refinement warnings keep their measured delta, blocked stages name the missing videos/checkpoints, and missing JSON fields render as “—” rather than invented curves.
+The UI intentionally shows uncertainty: XD refinement warnings keep their measured delta, blocked stages name the missing videos/checkpoints, and missing JSON fields render as “—” rather than invented curves. The Pipeline page runs the released configuration as a sandboxed verification; custom hyperparameter sweeps stay on the CLI (refinement_eval.py / correlation_eval.py) so the console never silently overwrites result/.
 
 ## Design system and skill
 
