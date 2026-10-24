@@ -1,19 +1,19 @@
 import type { ReactNode } from "react";
 
 const STATUS_LABEL: Record<string, string> = {
-  pass: "pass",
-  verified: "verified",
-  completed: "completed",
-  warning: "warning",
-  fail: "fail",
-  error: "error",
-  blocked: "blocked",
-  asset: "asset only",
-  untested: "untested",
-  skipped: "skipped",
-  queued: "queued",
-  running: "running",
-  cancelled: "cancelled",
+  pass: "通过",
+  verified: "已验证",
+  completed: "已完成",
+  warning: "警告",
+  fail: "失败",
+  error: "错误",
+  blocked: "受阻",
+  asset: "仅产物",
+  untested: "未验证",
+  skipped: "已跳过",
+  queued: "排队中",
+  running: "运行中",
+  cancelled: "已取消",
 };
 
 function tone(status: string): { cls: string; dot: string } {

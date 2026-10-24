@@ -3,7 +3,7 @@ import { Link, useSearchParams } from "react-router-dom";
 
 import { api, formatNumber } from "../api";
 import { CategoryLollipop, MetricRuler, ScoreStrip } from "../components/Charts";
-import { StatusDot, StatusTag } from "../components/Status";
+import { StatusDot, StatusTag, statusLabel } from "../components/Status";
 import { useAsync, useTitle } from "../hooks";
 import type { DatasetSummary, Metrics, Overview, Pipeline, Reproduction } from "../types";
 
@@ -37,12 +37,12 @@ function ReproStamp({ repro }: { repro: Reproduction | null }) {
     return (
       <div className="repro-stamp">
         <div className="repro-stamp__head">
-          <span className="micro">REPRODUCTION</span>
+          <span className="micro">本机复现</span>
           <StatusTag status="untested" />
         </div>
         <div className="repro-stamp__count">—</div>
         <div className="repro-stamp__rows">
-          <div className="repro-stamp__row"><span>status</span><b>not run on this checkout</b></div>
+          <div className="repro-stamp__row"><span>状态</span><b>未在当前检出中运行</b></div>
         </div>
       </div>
     );
@@ -52,18 +52,18 @@ function ReproStamp({ repro }: { repro: Reproduction | null }) {
   return (
     <div className="repro-stamp">
       <div className="repro-stamp__head">
-        <span className="micro">REPRODUCTION / THIS MACHINE</span>
-        <span className="tag tag--moss">LOCAL</span>
+        <span className="micro">本机复现</span>
+        <span className="tag tag--moss">本机</span>
       </div>
       <div className="repro-stamp__count">
-        {counts.pass ?? 0}<span> / {total} checks</span>
+        {counts.pass ?? 0}<span> / {total} 项校验</span>
       </div>
       <div className="repro-stamp__rows">
-        <div className="repro-stamp__row"><span>passed</span><b>{counts.pass ?? 0}</b></div>
-        <div className="repro-stamp__row"><span>warnings</span><b>{counts.warning ?? 0}</b></div>
-        <div className="repro-stamp__row"><span>failed</span><b>{counts.fail ?? 0}</b></div>
+        <div className="repro-stamp__row"><span>通过</span><b>{counts.pass ?? 0}</b></div>
+        <div className="repro-stamp__row"><span>警告</span><b>{counts.warning ?? 0}</b></div>
+        <div className="repro-stamp__row"><span>失败</span><b>{counts.fail ?? 0}</b></div>
         <div className="repro-stamp__row">
-          <span>generated</span>
+          <span>生成</span>
           <b>{repro.generated_at ? repro.generated_at.slice(0, 16).replace("T", " ") : "—"}</b>
         </div>
       </div>
@@ -74,20 +74,20 @@ function ReproStamp({ repro }: { repro: Reproduction | null }) {
 function DatasetStats({ dataset, metrics }: { dataset: DatasetSummary; metrics: Metrics }) {
   return (
     <div className="stat-grid">
-      <Stat label="PR AUC" value={formatNumber(metrics.pr_auc, 4)} note="precision–recall" />
-      <Stat label="VIDEOS" value={dataset.videos} note="scored in this tree" />
-      <Stat label="RUNS" value={dataset.runs} note="refine + ensemble" />
+      <Stat label="PR AUC" value={formatNumber(metrics.pr_auc, 4)} note="精确率–召回率" />
+      <Stat label="视频" value={dataset.videos} note="当前树中已计分" />
+      <Stat label="运行" value={dataset.runs} note="细化 + 集成" />
       <Stat
-        label="COARSE BASE"
+        label="粗粒度基线"
         value={formatNumber(dataset.baseline?.coarse?.roc_auc, 4)}
-        note="single granularity"
+        note="单一粒度"
       />
     </div>
   );
 }
 
 function PipelineLedger({ pipeline }: { pipeline: Pipeline | null }) {
-  if (!pipeline) return <div className="loading">reading docket…</div>;
+  if (!pipeline) return <div className="loading">正在读取流程清单…</div>;
   return (
     <div className="ledger">
       {pipeline.stages.map((stage) => (
@@ -99,7 +99,7 @@ function PipelineLedger({ pipeline }: { pipeline: Pipeline | null }) {
           </span>
           <span className="ledger__status">
             <StatusDot status={stage.status} />
-            {stage.status}
+            {statusLabel(stage.status)}
           </span>
         </Link>
       ))}
@@ -108,7 +108,7 @@ function PipelineLedger({ pipeline }: { pipeline: Pipeline | null }) {
 }
 
 export default function OverviewPage() {
-  useTitle("Desk");
+  useTitle("总览");
   const [params, setParams] = useSearchParams();
   const requested = params.get("dataset") ?? undefined;
   const overview = useAsync<Overview>(() => api.overview(requested), [requested]);
@@ -123,13 +123,13 @@ export default function OverviewPage() {
   const highest = selected?.highest_run;
 
   if (overview.loading && !data) {
-    return <div className="loading">opening the case register…</div>;
+    return <div className="loading">正在打开案件登记…</div>;
   }
   if (overview.error) {
-    return <div className="error-box">Could not read the evidence API. {overview.error}</div>;
+    return <div className="error-box">无法读取证据接口。{overview.error}</div>;
   }
   if (!data || !selected || !best) {
-    return <div className="empty">No completed runs found under result/. Restore the release artifacts first.</div>;
+    return <div className="empty">result/ 中没有已完成的运行。请先恢复发布产物。</div>;
   }
 
   return (
@@ -137,23 +137,23 @@ export default function OverviewPage() {
       <header className="page-head">
         <div>
           <div className="page-head__kicker micro">
-            <span>Desk / case register</span>
+            <span>案头 / 案件登记</span>
             <span className="dot dot--sm" style={{ background: "var(--vermilion)" }} />
-            <span>issue 001</span>
+            <span>第 001 期</span>
           </div>
-          <h1 className="page-head__title">Anomaly, <em>with a paper trail.</em></h1>
+          <h1 className="page-head__title">异常，<em>有迹可循。</em></h1>
           <p className="page-head__lede">
-            Read every score back to a video, an HGTree node, and the sentence the model used to justify it.
-            This desk is a local index of the released VADTree runs — no demo data, no hidden reruns.
+            把每一个分数读回一段视频、一个 HGTree 节点，以及模型用来自证的那句话。
+            这里是已发布 VADTree 运行的本地索引——没有演示数据，也没有隐藏的重跑。
           </p>
         </div>
         <div className="page-head__side">
-          <span className="tag tag--ink">LOCAL EVIDENCE CONSOLE</span>
+          <span className="tag tag--ink">本地证据控制台</span>
           <div className="stamp">
-            <b>{data.counts.datasets} datasets / {data.counts.runs} runs</b>
-            {data.counts.videos.toLocaleString()} scored videos<br />
-            {selected.label} featured<br />
-            machine · 4060 Ti
+            <b>{data.counts.datasets} 个数据集 / {data.counts.runs} 次运行</b>
+            {data.counts.videos.toLocaleString()} 段视频已计分<br />
+            {selected.label} 精选<br />
+            本机 · 4060 Ti
           </div>
         </div>
       </header>
@@ -161,26 +161,26 @@ export default function OverviewPage() {
       <section className="hero" aria-labelledby="featured-metric">
         <div className="hero__metric">
           <div className="metric__top">
-            <span className="micro" id="featured-metric">Featured run / {selected.label}</span>
-            <span className="tag tag--red">ENSEMBLE</span>
+            <span className="micro" id="featured-metric">精选运行 / {selected.label}</span>
+            <span className="tag tag--red">集成</span>
           </div>
           <div className="metric__value">
             {formatNumber(best.metrics.roc_auc, 4)}
             <small>ROC AUC</small>
           </div>
           <div className="metric__caption">
-            {best.label} · {best.videos} videos · {best.kind === "ensemble" ? "coarse + fine correlation" : "single granularity"}
+            {best.label} · {best.videos} 段视频 · {best.kind === "ensemble" ? "粗/细粒度关联" : "单一粒度"}
           </div>
           {delta !== null ? (
             <div className={"metric__delta" + (delta < 0 ? " metric__delta--warn" : "")}>
               <span className="dot dot--sm" />
-              {delta >= 0 ? "+" : ""}{delta.toFixed(4)} vs coarse baseline {formatNumber(coarse?.roc_auc, 4)}
+              {delta >= 0 ? "+" : ""}{delta.toFixed(4)}，较粗粒度基线 {formatNumber(coarse?.roc_auc, 4)}
             </div>
           ) : null}
           <MetricRuler value={best.metrics.roc_auc} />
         </div>
         <div className="hero__side">
-          <div className="dataset-tabs" role="tablist" aria-label="Dataset">
+          <div className="dataset-tabs" role="tablist" aria-label="数据集">
             {data.datasets.map((dataset) => (
               <button
                 key={dataset.id}
@@ -196,8 +196,8 @@ export default function OverviewPage() {
           <DatasetStats dataset={selected} metrics={best.metrics} />
           {highest && highest.id !== best.id ? (
             <div className="highest">
-              Highest in this register: <b>{formatNumber(highest.metrics.roc_auc, 4)}</b><br />
-              {highest.label} · a non-headline variant, kept visible rather than promoted.
+              台账最高分：<b>{formatNumber(highest.metrics.roc_auc, 4)}</b><br />
+              {highest.label} · 非头条变体，保留可见而非替换精选结果。
             </div>
           ) : (
             <div className="highest">
@@ -210,16 +210,16 @@ export default function OverviewPage() {
       <section className="section">
         <SectionHead
           index="01"
-          title="Score atlases"
-          note="Twelve real videos from the featured run. Peaks are not thumbnails; they are the published anomaly scores."
-          action={<Link to={"/evidence?run=" + encodeURIComponent(best.id) + "&video=" + encodeURIComponent(data.strips[0]?.name ?? "")}>open evidence →</Link>}
+          title="分数图谱"
+          note="精选运行中的 12 段真实视频。峰不是缩略图，而是发布版异常分数。"
+          action={<Link to={"/evidence?run=" + encodeURIComponent(best.id) + "&video=" + encodeURIComponent(data.strips[0]?.name ?? "")}>打开证据 →</Link>}
         />
         {data.strips.length ? (
           <div className="atlas-grid">
             {data.strips.map((strip) => <ScoreStrip key={strip.name} runId={best.id} strip={strip} />)}
           </div>
         ) : (
-          <div className="empty">The featured run has no per-video strips yet.</div>
+          <div className="empty">精选运行暂时没有逐视频分数条带。</div>
         )}
       </section>
 
@@ -228,16 +228,16 @@ export default function OverviewPage() {
           <div>
             <SectionHead
               index="02"
-              title="Category ledger"
-              note="ROC AUC by published category. Normal has no ROC (all negatives) and is omitted."
+              title="类别账本"
+              note="按发布类别统计 ROC AUC。正常类没有 ROC（全为负样本），故省略。"
             />
             <CategoryLollipop categories={data.categories} />
             <p className="muted" style={{ marginTop: 14, fontSize: 12, maxWidth: 560 }}>
-              {selected.blurb} Category scores are read from the featured ensemble's <span className="mono">dataset_metric</span>.
+              {selected.blurb} 类别分数读取自精选集成的 <span className="mono">dataset_metric</span>。
             </p>
           </div>
           <div>
-            <SectionHead index="03" title="Pipeline docket" note="Seven stages, their actual verification state on this machine." />
+            <SectionHead index="03" title="流程清单" note="七个阶段，以及它们在本机的实际校验状态。" />
             <PipelineLedger pipeline={pipeline.data} />
           </div>
         </div>
@@ -245,14 +245,14 @@ export default function OverviewPage() {
 
       <section className="stamp-row">
         <div>
-          <div className="micro">Reading key</div>
+          <div className="micro">阅读说明</div>
           <p style={{ maxWidth: 640, marginTop: 8, fontSize: 13, color: "var(--ink-soft)" }}>
-            A filled red band is ground truth. A curve is the score the release actually shipped. When a check
-            is not bit-identical, the desk keeps the delta visible instead of rounding it into a green badge.
-            Open a strip to read its coarse and fine nodes, captions, and chain-of-thought trace.
+            实心红带是真值区间。曲线是发布包实际给出的分数。遇到不能逐位一致的校验，
+            这里保留差值，而不是把它抹成一个绿色徽章。打开任一条带，可阅读粗/细节点、
+            模型描述与思维链。
           </p>
           <div className="micro" style={{ marginTop: 12 }}>
-            data · result/ · manifest · {data.counts.videos.toLocaleString()} videos · local only
+            数据 · result/ · 清单 · {data.counts.videos.toLocaleString()} 段视频 · 仅本地
           </div>
         </div>
         <ReproStamp repro={data.reproduction} />

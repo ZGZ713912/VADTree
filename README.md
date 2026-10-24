@@ -87,7 +87,7 @@ DeepSeek-R1-Distill-Qwen-14B weight: [huggingface](https://huggingface.co/deepse
 
 # Evidence console (local WebUI)
 
-A local, read-only evidence desk for the released runs: score atlases, run register, HGTree node timeline, caption / chain-of-thought inspection, artifact manifest, and sandboxed re-verification of steps 2/6/7.
+A local, read-only evidence desk for the released runs: score atlases, run register, HGTree node timeline, caption / chain-of-thought inspection, artifact manifest, and sandboxed re-verification of steps 2/6/7. The interface copy is Chinese; technical identifiers (VADTree, ROC/PR, GT, CoT, filenames) stay in their original form.
 
 ![VADTree evidence console](docs/screenshots/overview.png)
 

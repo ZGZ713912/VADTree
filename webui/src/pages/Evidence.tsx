@@ -22,36 +22,36 @@ function NodeDetail({ node, kind, source }: { node: NodeEvidence; kind: "coarse"
             {formatSeconds(node.start_s)} — {formatSeconds(node.end_s)}
           </div>
           <div className="node-detail__sub">
-            {kind} node · frames {node.start}–{node.end} · {node.key}
+            {kind === "coarse" ? "粗粒度" : "细粒度"}节点 · 帧 {node.start}–{node.end} · {node.key}
           </div>
         </div>
         <div className="node-detail__score">
           {formatNumber(node.score, 3)}
-          <span>refined score</span>
+          <span>细化分数</span>
         </div>
       </div>
       <div className="node-scores">
-        <div><span>original</span><b>{formatNumber(node.original_score, 3)}</b></div>
-        <div><span>delta</span><b className={delta !== null && delta >= 0 ? "red" : "moss"}>{delta === null ? "—" : (delta >= 0 ? "+" : "") + delta.toFixed(3)}</b></div>
-        <div><span>source</span><b>{source ?? "—"}</b></div>
+        <div><span>原始分数</span><b>{formatNumber(node.original_score, 3)}</b></div>
+        <div><span>增量</span><b className={delta !== null && delta >= 0 ? "red" : "moss"}>{delta === null ? "—" : (delta >= 0 ? "+" : "") + delta.toFixed(3)}</b></div>
+        <div><span>来源</span><b>{source ?? "—"}</b></div>
       </div>
       <div className="prose-block">
-        <div className="prose-block__label"><span>Caption / what the VLM saw</span></div>
+        <div className="prose-block__label"><span>描述 / VLM 看到的内容</span></div>
         {node.caption ? <div className="prose-block__body">{node.caption}</div> : (
-          <div className="prose-block__empty">No caption stored for this node in the release.</div>
+          <div className="prose-block__empty">发布包没有为这个节点保留描述。</div>
         )}
       </div>
       <div className="prose-block">
         <div className="prose-block__label">
-          <span>Reasoning / chain of thought</span>
-          {node.reasoning_truncated ? <span className="tag tag--ochre">truncated</span> : null}
+          <span>推理 / 思维链</span>
+          {node.reasoning_truncated ? <span className="tag tag--ochre">已截断</span> : null}
         </div>
         {node.reasoning ? (
           <div className="prose-block__body prose-block__body--tall">{node.reasoning}</div>
         ) : (
           <div className="prose-block__empty">
-            This run does not carry a chain-of-thought trace for the node. The score is still reproducible from the
-            released JSON; only the explanatory text is missing.
+            该运行没有为这个节点保留思维链。分数仍可从发布 JSON 复现，
+            只是缺少解释文本。
           </div>
         )}
       </div>
@@ -60,7 +60,7 @@ function NodeDetail({ node, kind, source }: { node: NodeEvidence; kind: "coarse"
 }
 
 export default function EvidencePage() {
-  useTitle("Evidence");
+  useTitle("证据");
   const [params, setParams] = useSearchParams();
   const runs = useAsync(() => api.runs(), []);
   const allRuns = runs.data?.runs ?? [];
@@ -128,39 +128,39 @@ export default function EvidencePage() {
   const selectedNode = nodePool.find((node) => nodeId(node, activeTab) === selectedId) ?? nodePool[0] ?? null;
   const currentRun: Run | null = detail.data?.run ?? allRuns.find((run) => run.id === runId) ?? null;
 
-  if (runs.loading && !runs.data) return <div className="loading">opening evidence index…</div>;
-  if (runs.error) return <div className="error-box">Could not read runs. {runs.error}</div>;
-  if (!allRuns.length) return <div className="empty">No runs found under result/.</div>;
+  if (runs.loading && !runs.data) return <div className="loading">正在打开证据索引…</div>;
+  if (runs.error) return <div className="error-box">无法读取运行记录。{runs.error}</div>;
+  if (!allRuns.length) return <div className="empty">result/ 中没有运行。</div>;
 
   return (
     <div className="page evidence-page">
       <header className="page-head">
         <div>
           <div className="page-head__kicker micro">
-            <span>Evidence / node trace</span>
+            <span>证据 / 节点追踪</span>
             <span className="dot dot--sm" style={{ background: "var(--vermilion)" }} />
-            <span>{currentRun?.dataset_label ?? "dataset"}</span>
+            <span>{currentRun?.dataset_label ?? "数据集"}</span>
           </div>
-          <h1 className="page-head__title">Read the <em>trace.</em></h1>
+          <h1 className="page-head__title">读懂<em>痕迹。</em></h1>
           <p className="page-head__lede">
-            One video, two granularities, one time axis. Hover the curve for a score; click a node to read the
-            caption and the chain-of-thought that produced it.
+            一段视频，两种粒度，一条时间轴。悬停曲线读取分数；点击节点阅读
+            模型描述与思维链。
           </p>
         </div>
         <div className="page-head__side">
-          <StatusTag status="verified" label="read only" />
+          <StatusTag status="verified" label="只读" />
           <div className="stamp">
-            <b>{videos.length} videos indexed</b>
+            <b>已索引 {videos.length} 段视频</b>
             {currentRun?.label ?? "—"}<br />
-            {data?.redundant_count ?? 0} redundant nodes
+            {data?.redundant_count ?? 0} 个冗余节点
           </div>
         </div>
       </header>
 
       <div className="evidence-toolbar">
         <label className="field">
-          <span>Run</span>
-          <select className="select" value={runId} onChange={(event) => setRun(event.target.value)} aria-label="Choose run">
+          <span>运行</span>
+          <select className="select" value={runId} onChange={(event) => setRun(event.target.value)} aria-label="选择运行">
             {allRuns.map((run) => (
               <option key={run.id} value={run.id}>
                 {run.dataset_label} · {run.label} · {formatNumber(run.metrics.roc_auc, 4)}
@@ -169,8 +169,8 @@ export default function EvidencePage() {
           </select>
         </label>
         <label className="field" style={{ minWidth: 260 }}>
-          <span>Video</span>
-          <select className="select" value={videoName} onChange={(event) => setVideo(event.target.value)} aria-label="Choose video">
+          <span>视频</span>
+          <select className="select" value={videoName} onChange={(event) => setVideo(event.target.value)} aria-label="选择视频">
             {videos.map((video) => (
               <option key={video.name} value={video.name}>
                 {video.stem} · {formatNumber(video.auc, 3)}
@@ -179,24 +179,24 @@ export default function EvidencePage() {
           </select>
         </label>
         <div className="evidence-toolbar__meta">
-          <span className="tag tag--faint">{currentRun?.kind ?? "run"}</span>
+          <span className="tag tag--faint">{currentRun?.kind === "ensemble" ? "集成" : "细化"}</span>
           <span className="mono" style={{ fontSize: 9 }}>{currentRun?.config.similarity_type ?? ""}{currentRun?.config.topK ? " · top" + currentRun.config.topK : ""}{currentRun?.config.tao !== null && currentRun?.config.tao !== undefined ? " · τ" + currentRun.config.tao : ""}</span>
-          {currentRun ? <Link className="section-head__action" to={"/runs?run=" + encodeURIComponent(currentRun.id)}>run register <ArrowIcon size={10} /></Link> : null}
+          {currentRun ? <Link className="section-head__action" to={"/runs?run=" + encodeURIComponent(currentRun.id)}>运行台账 <ArrowIcon size={10} /></Link> : null}
         </div>
       </div>
 
       <div className="evidence-layout">
         <aside className="evidence-index">
-          <div className="micro" style={{ marginBottom: 8 }}>Case file / {visibleVideos.length} shown</div>
+          <div className="micro" style={{ marginBottom: 8 }}>案件卷宗 / 显示 {visibleVideos.length} 段</div>
           <label className="video-search">
-            <span className="sr-only">Filter videos</span>
+            <span className="sr-only">筛选视频</span>
             <span style={{ display: "flex", alignItems: "center", border: "1px solid var(--rule-strong)", background: "var(--card)", padding: "0 8px" }}>
               <SearchIcon size={12} />
               <input
                 className="input"
                 style={{ border: 0, background: "transparent", paddingLeft: 6 }}
                 value={videoQuery}
-                placeholder="Filter videos / categories"
+                placeholder="筛选视频 / 类别"
                 onChange={(event) => setVideoQuery(event.target.value)}
               />
             </span>
@@ -216,7 +216,7 @@ export default function EvidencePage() {
                     <span className="video-item__name">{video.stem}</span>
                     <span className="video-item__meta">
                       <span>{video.category}</span>
-                      {video.anomaly ? <span className="red">anomaly</span> : <span>normal</span>}
+                      {video.anomaly ? <span className="red">异常</span> : <span>正常</span>}
                     </span>
                   </span>
                   <span className={"video-item__auc" + (video.auc !== null && video.auc >= 0.8 ? " video-item__auc--good" : video.auc !== null && video.auc < 0.5 ? " video-item__auc--bad" : "")}>
@@ -225,44 +225,44 @@ export default function EvidencePage() {
                 </button>
               );
             })}
-            {!visibleVideos.length ? <div className="empty">No video matches this filter.</div> : null}
+            {!visibleVideos.length ? <div className="empty">没有视频匹配当前筛选。</div> : null}
           </div>
         </aside>
 
         <section className="evidence-main">
-          {evidence.loading && !data ? <div className="loading">loading video trace…</div> : null}
-          {evidence.error ? <div className="error-box">Could not load evidence. {evidence.error}</div> : null}
+          {evidence.loading && !data ? <div className="loading">正在读取视频痕迹…</div> : null}
+          {evidence.error ? <div className="error-box">无法读取证据。 {evidence.error}</div> : null}
           {data ? (
             <>
               <div className="video-title">
                 <div>
-                  <div className="micro" style={{ marginBottom: 6 }}>{data.video.category} / {data.video.has_anomaly ? "ground-truth anomaly" : "normal"}</div>
+                  <div className="micro" style={{ marginBottom: 6 }}>{data.video.category} / {data.video.has_anomaly ? "真值异常" : "正常"}</div>
                   <h2>{data.video.stem}</h2>
                   <div className="video-title__meta">
                     <span className="tag tag--faint">{formatSeconds(data.video.duration)}</span>
                     <span className="tag tag--faint">{data.video.fps.toFixed(2)} fps</span>
-                    <span className="tag tag--faint">{data.video.frames.toLocaleString()} frames</span>
-                    <span className="tag tag--faint">{data.video.gt.length} GT intervals</span>
-                    {data.reasoning_source ? <span className="tag tag--ochre">{data.reasoning_source}</span> : <span className="tag tag--faint">no CoT</span>}
+                    <span className="tag tag--faint">{data.video.frames.toLocaleString()} 帧</span>
+                    <span className="tag tag--faint">{data.video.gt.length} 个真值区间</span>
+                    {data.reasoning_source ? <span className="tag tag--ochre">{data.reasoning_source}</span> : <span className="tag tag--faint">无思维链</span>}
                   </div>
                 </div>
                 <div className="video-title__score">
                   <b>{formatNumber(data.video.auc, 4)}</b>
-                  <span>video ROC AUC</span>
+                  <span>视频 ROC AUC</span>
                 </div>
               </div>
               <Timeline evidence={data} selected={selectedNode} onSelect={selectNode} />
               <div className="evidence-note">
-                <span><EvidenceIcon size={12} /> {data.coarse.length} coarse / {data.fine.length} fine nodes</span>
-                <span>score source · {currentRun?.kind === "ensemble" ? "ensemble mean over node span" : "published node score"}</span>
-                <span>{data.redundant_count} redundant candidates kept in the tree JSON</span>
+                <span><EvidenceIcon size={12} /> {data.coarse.length} 个粗节点 / {data.fine.length} 个细节点</span>
+                <span>分数来源 · {currentRun?.kind === "ensemble" ? "节点区间内的集成均值" : "发布版节点分数"}</span>
+                <span>{data.redundant_count} 个冗余候选保留在树 JSON 中</span>
               </div>
             </>
           ) : null}
         </section>
 
         <aside className="inspector">
-          <div className="inspector__tabs" role="tablist" aria-label="Granularity">
+          <div className="inspector__tabs" role="tablist" aria-label="粒度">
             {(["coarse", "fine"] as const).map((tab) => (
               <button
                 key={tab}
@@ -276,7 +276,7 @@ export default function EvidencePage() {
                   setSelectedId(nodeId(best, tab));
                 }}
               >
-                {tab} / {data ? (tab === "coarse" ? data.coarse.length : data.fine.length) : 0}
+                {tab === "coarse" ? "粗粒度" : "细粒度"} / {data ? (tab === "coarse" ? data.coarse.length : data.fine.length) : 0}
               </button>
             ))}
           </div>
@@ -288,14 +288,14 @@ export default function EvidencePage() {
                     key={node.key}
                     className={"node-chip" + (selectedNode?.key === node.key ? " is-active" : "")}
                     onClick={() => setSelectedId(nodeId(node, activeTab))}
-                    title={node.key + " · score " + formatNumber(node.score, 3)}
+                    title={node.key + " · 分数 " + formatNumber(node.score, 3)}
                   >
                     {formatSeconds(node.start_s)}–{formatSeconds(node.end_s)} · {formatNumber(node.score, 2)}
                   </button>
                 ))}
               </div>
               {selectedNode ? <NodeDetail node={selectedNode} kind={activeTab} source={data.reasoning_source} /> : (
-                <div className="empty">No {activeTab} nodes for this video.</div>
+                <div className="empty">该视频没有{activeTab === "coarse" ? "粗粒度" : "细粒度"}节点。</div>
               )}
             </>
           ) : null}

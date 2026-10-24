@@ -8,6 +8,7 @@
 
 - 真实运行环境：本地 HTTP 服务 + 真实 result/ 数据，无占位曲线。
 - 截图：Playwright Chromium，1440×900 与 390×844，全页截图。
+- 语言：界面文案为中文；VADTree、ROC/PR、GT、CoT、文件名与命令行保持技术原文。
 - 评审：本轮为**自查**，没有使用独立子代理；评审维度包括构图、层级、字体、色彩、数据可读性、窄屏。
 - 证据：docs/screenshots/overview.png、runs.png、evidence.png、pipeline.png、archive.png、overview-mobile.png、evidence-mobile.png。
 
@@ -30,6 +31,7 @@
 - Mobile：Overview 与 Evidence 均无横向溢出；导航折叠为横向滚动/换行，主路径仍可完成。
 - Archive：96/96 文件、Full-CoT 变体标注、published → reproduced 数值可见；XD 两条 warning 保留具体 delta。
 - 视觉：暖纸、墨色、朱红批注与 Fraunces/IBM Plex 的组合与“证据桌” brief 一致；没有使用霓虹渐变、玻璃拟态或无意义发光。
+- 中文排版：正文回退 Noto Sans CJK SC，标题回退 Noto Serif CJK SC；中文标题不使用合成斜体，强调仅用朱红与字重。
 
 ## 功能验证（Playwright）
 

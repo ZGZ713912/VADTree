@@ -26,7 +26,7 @@ DATASET_META = {
         "folder": "ucf_crime",
         "anomaly_file": "anomaly_test.txt",
         "temporal_file": "Temporal_Anomaly_Annotation_for_Testing_Videos.txt",
-        "blurb": "290 surveillance clips, 14 crime categories. The paper's quick-start dataset.",
+        "blurb": "290 段监控视频、14 类犯罪事件，是论文的快速上手数据集。",
     },
     "MSAD_test": {
         "label": "MSAD",
@@ -34,7 +34,7 @@ DATASET_META = {
         "folder": "MSAD",
         "anomaly_file": "anomaly_test.txt",
         "temporal_file": "Temporal_Anomaly_Annotation_for_Testing_Videos.txt",
-        "blurb": "240 multi-scene clips with eleven incident types and variable frame rates.",
+        "blurb": "240 段多场景视频，涵盖十一类事件，帧率不统一。",
     },
     "XD_Violence_test": {
         "label": "XD-Violence",
@@ -42,17 +42,43 @@ DATASET_META = {
         "folder": "xd_violence",
         "anomaly_file": "anomaly_test.txt",
         "temporal_file": "temporal_anomaly_annotation_for_testing_videos.txt",
-        "blurb": "800 movie and web clips, six violence categories, often multi-label.",
+        "blurb": "800 段电影与网络视频，六类暴力事件，常带多标签。",
     },
 }
 DATASET_ORDER = ["UCF_Crime_test", "MSAD_test", "XD_Violence_test"]
 
+# Display names for dataset categories. The annotations and metric files use
+# English class tokens; the console shows Chinese labels while keeping the raw
+# tokens available in the JSON/paths.
 CLASS_DISPLAY = {
-    "Object": "Object Falling",
-    "People": "People Falling",
-    "Traffic": "Traffic Accident",
-    "Water": "Water Incident",
-    "Car_accident": "Car Accident",
+    "Normal": "正常",
+    "Abnormal": "异常",
+    "all": "全部",
+    "Abuse": "虐待",
+    "Arrest": "逮捕",
+    "Arson": "纵火",
+    "Assault": "袭击",
+    "Burglary": "入室盗窃",
+    "Explosion": "爆炸",
+    "Fighting": "斗殴",
+    "RoadAccidents": "交通事故",
+    "Robbery": "抢劫",
+    "Shooting": "枪击",
+    "Shoplifting": "入店行窃",
+    "Stealing": "盗窃",
+    "Vandalism": "破坏公物",
+    "Fire": "火灾",
+    "Object": "物体坠落",
+    "People": "人员坠落",
+    "Traffic": "交通事故",
+    "Water": "涉水事件",
+    "Car_accident": "车祸",
+    "Car Accident": "车祸",
+    "Object Falling": "物体坠落",
+    "People Falling": "人员坠落",
+    "Traffic Accident": "交通事故",
+    "Water Incident": "涉水事件",
+    "Riot": "骚乱",
 }
 
 _JSON_CACHE: "OrderedDict[tuple, object]" = OrderedDict()
@@ -92,10 +118,10 @@ def num(value):
 
 def pretty_category(raw: str) -> str:
     if not raw:
-        return "Unknown"
+        return "未知"
     parts = [p.strip() for p in str(raw).split(",") if p.strip()]
     if not parts:
-        return "Unknown"
+        return "未知"
     return " / ".join(CLASS_DISPLAY.get(p, p) for p in parts)
 
 
@@ -121,7 +147,7 @@ def annotations(dataset: str):
             except ValueError:
                 continue
             out[stem] = {"start": start, "end": end, "label": parts[3],
-                         "intervals": [], "category": "Unknown"}
+                         "intervals": [], "category": "未知"}
     temporal = folder / meta["temporal_file"]
     if temporal.exists():
         for line in temporal.read_text(encoding="utf-8").splitlines():
@@ -130,7 +156,7 @@ def annotations(dataset: str):
                 continue
             stem = _strip_ext(parts[0])
             entry = out.setdefault(stem, {"start": 0, "end": 0, "label": "",
-                                          "intervals": [], "category": "Unknown"})
+                                          "intervals": [], "category": "未知"})
             entry["category"] = pretty_category(parts[1])
             intervals = []
             vals = parts[2:]
@@ -153,7 +179,7 @@ def _run_metric(dataset_metric):
     if "all" in dataset_metric:
         all_metric = dataset_metric.get("all") or {}
         categories = [
-            {"name": key, "roc_auc": num(val.get("roc_auc")),
+            {"name": CLASS_DISPLAY.get(key, key), "roc_auc": num(val.get("roc_auc")),
              "pr_auc": num(val.get("pr_auc"))}
             for key, val in dataset_metric.items()
             if key != "all" and isinstance(val, dict)
@@ -174,8 +200,8 @@ def _run_label(kind, resolution, args, path):
         if beta is None:
             m = re.search(r"beat(-?\d+(?:\.\d+)?)", path)
             beta = m.group(1) if m else None
-        return "ensemble · " + (("β" + str(beta)) if beta is not None else "coarse + fine")
-    parts = [resolution or "run"]
+        return "集成 · " + (("β" + str(beta)) if beta is not None else "粗粒度 + 细粒度")
+    parts = [{"coarse": "粗粒度", "fine": "细粒度"}.get(resolution or "", "运行")]
     if args.get("similarity_type"):
         parts.append(str(args["similarity_type"]) + str(args.get("topK", "")))
     if args.get("num_neighbors") is not None:
@@ -348,7 +374,7 @@ def video_records(run):
         rows.append({
             "name": video,
             "stem": stem,
-            "category": ann.get("category", "Unknown"),
+            "category": ann.get("category", "未知"),
             "fps": fps,
             "frames": frames,
             "duration": round(frames / fps, 3) if frames and fps else None,
@@ -549,7 +575,7 @@ def evidence(run_id, video):
         "video": {
             "name": key,
             "stem": _strip_ext(key),
-            "category": ann.get("category", "Unknown"),
+            "category": ann.get("category", "未知"),
             "fps": fps,
             "frames": frames,
             "duration": round(frames / fps, 3) if frames and fps else None,
@@ -562,8 +588,8 @@ def evidence(run_id, video):
         "coarse": coarse_nodes,
         "fine": fine_nodes,
         "redundant_count": len(red),
-        "reasoning_source": "step-4 CoT" if reasoning else (
-            "refine trace" if isinstance(segments, dict) and any(
+        "reasoning_source": "Step-4 思维链" if reasoning else (
+            "细化追踪" if isinstance(segments, dict) and any(
                 isinstance(v, list) and len(v) > 2 for v in segments.values()
             ) else None
         ),

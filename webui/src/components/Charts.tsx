@@ -47,7 +47,7 @@ export function ScoreStrip({ runId, strip }: { runId: string; strip: Strip }) {
   const href = "/evidence?run=" + encodeURIComponent(runId) + "&video=" + encodeURIComponent(strip.name);
 
   return (
-    <Link className="strip" to={href} aria-label={"Open evidence for " + strip.stem}>
+    <Link className="strip" to={href} aria-label={"打开证据：" + strip.stem}>
       <div className="strip__head">
         <span className="strip__name" title={strip.name}>{strip.stem}</span>
         <span className="strip__auc">{formatNumber(strip.auc, 4)}</span>
@@ -62,7 +62,7 @@ export function ScoreStrip({ runId, strip }: { runId: string; strip: Strip }) {
         viewBox={"0 0 " + width + " " + height}
         preserveAspectRatio="none"
         role="img"
-        aria-label={strip.stem + " anomaly score over time"}
+        aria-label={strip.stem + " 的异常分数时间曲线"}
       >
         <defs>
           <pattern id={"hatch-" + patternId} width="4" height="4" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
@@ -129,7 +129,7 @@ export function Timeline({
   }, [width, height, evidence.curve, duration]);
 
   if (!evidence.curve.length) {
-    return <div className="empty">This run has no per-frame score curve for {evidence.video.stem}.</div>;
+    return <div className="empty">该运行没有为 {evidence.video.stem} 提供逐帧分数曲线。</div>;
   }
 
   const handleMove = (event: React.MouseEvent<SVGSVGElement>) => {
@@ -173,7 +173,7 @@ export function Timeline({
               height={height}
               viewBox={"0 0 " + width + " " + height}
               role="img"
-              aria-label={"Anomaly score timeline for " + evidence.video.name}
+              aria-label={evidence.video.name + " 的异常分数时间轴"}
               onMouseMove={handleMove}
               onMouseLeave={() => setHover(null)}
               onClick={handleClick}
@@ -246,9 +246,9 @@ export function Timeline({
         ))}
       </div>
       <div className="timeline__legend">
-        <span><i className="legend-swatch legend-swatch--curve" /> score</span>
-        <span><i className="legend-swatch legend-swatch--gt" /> ground truth</span>
-        <span><i className="legend-swatch" style={{ borderStyle: "dashed" }} /> coarse node boundary</span>
+        <span><i className="legend-swatch legend-swatch--curve" /> 分数</span>
+        <span><i className="legend-swatch legend-swatch--gt" /> 真值区间</span>
+        <span><i className="legend-swatch" style={{ borderStyle: "dashed" }} /> 粗节点边界</span>
       </div>
       <NodeLanes evidence={evidence} selected={selected} onSelect={onSelect} />
     </div>
@@ -266,11 +266,11 @@ export function NodeLanes({
 }) {
   const duration = evidence.video.duration || evidence.curve[evidence.curve.length - 1]?.[0] || 1;
   const lanes: { kind: "coarse" | "fine"; label: string; nodes: NodeEvidence[] }[] = [
-    { kind: "coarse", label: "COARSE", nodes: evidence.coarse },
-    { kind: "fine", label: "FINE", nodes: evidence.fine },
+    { kind: "coarse", label: "粗粒度", nodes: evidence.coarse },
+    { kind: "fine", label: "细粒度", nodes: evidence.fine },
   ];
   return (
-    <div className="lanes" aria-label="HGTree node lanes">
+    <div className="lanes" aria-label="HGTree 节点带">
       {lanes.map((lane) => (
         <div className="lane" key={lane.kind}>
           <div className="lane__label">{lane.label}</div>
@@ -284,8 +284,8 @@ export function NodeLanes({
                   key={lane.kind + "-" + node.key}
                   className={"node node--s" + scoreBucket(node.score) + (isSelected ? " is-selected" : "")}
                   style={{ left: left + "%", width: width + "%" }}
-                  title={lane.label + " " + node.key + " · score " + formatNumber(node.score, 3)}
-                  aria-label={lane.label + " node " + node.key + ", score " + formatNumber(node.score, 3)}
+                  title={lane.label + " " + node.key + " · 分数 " + formatNumber(node.score, 3)}
+                  aria-label={lane.label + "节点 " + node.key + "，分数 " + formatNumber(node.score, 3)}
                   aria-pressed={isSelected}
                   onClick={() => onSelect(node, lane.kind)}
                 />
@@ -295,7 +295,7 @@ export function NodeLanes({
         </div>
       ))}
       <div className="lane__hint">
-        {evidence.coarse.length} coarse · {evidence.fine.length} fine · {evidence.redundant_count} redundant candidates · click a node to inspect
+        {evidence.coarse.length} 个粗节点 · {evidence.fine.length} 个细节点 · {evidence.redundant_count} 个冗余候选 · 点击节点查看
       </div>
     </div>
   );
@@ -309,10 +309,10 @@ export function CategoryLollipop({ categories }: { categories: CategoryMetric[] 
     .sort((a, b) => (b.roc_auc ?? 0) - (a.roc_auc ?? 0))
     .slice(0, 12);
   if (!rows.length) {
-    return <div className="empty">No category breakdown was published for this run.</div>;
+    return <div className="empty">该运行没有发布类别指标。</div>;
   }
   return (
-    <div className="lollipop" role="list" aria-label="ROC AUC by category">
+    <div className="lollipop" role="list" aria-label="按类别的 ROC AUC">
       {rows.map((row) => {
         const value = row.roc_auc ?? 0;
         const tone = row.name === "Abnormal" ? "red" : row.name === "Normal" ? "moss" : value < 0.6 ? "ochre" : "";

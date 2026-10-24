@@ -19,12 +19,12 @@ function ScrollToTop() {
 function NotFound() {
   return (
     <div className="page">
-      <div className="page-head__kicker micro">404 / case missing</div>
-      <h1 className="page-head__title">This page is <em>not in the file.</em></h1>
-      <p className="page-head__lede">The route does not exist. Return to the desk or open the evidence index.</p>
+      <div className="page-head__kicker micro">404 / 卷宗中没有这一页</div>
+      <h1 className="page-head__title">这一页，<em>不在卷宗里。</em></h1>
+      <p className="page-head__lede">当前路由不存在。回到案头，或打开证据索引。</p>
       <div style={{ marginTop: 24, display: "flex", gap: 12 }}>
-        <Link className="button" to="/">back to desk</Link>
-        <Link className="button button--ghost" to="/evidence">open evidence</Link>
+        <Link className="button" to="/">回到案头</Link>
+        <Link className="button button--ghost" to="/evidence">打开证据</Link>
       </div>
     </div>
   );

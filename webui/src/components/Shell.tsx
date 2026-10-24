@@ -10,19 +10,19 @@ import {
 import { StatusDot } from "./Status";
 
 const NAV = [
-  { to: "/", label: "Desk", num: "01", icon: DeskIcon },
-  { to: "/runs", label: "Runs", num: "02", icon: RunsIcon },
-  { to: "/evidence", label: "Evidence", num: "03", icon: EvidenceIcon },
-  { to: "/pipeline", label: "Pipeline", num: "04", icon: PipelineIcon },
-  { to: "/archive", label: "Archive", num: "05", icon: ArchiveIcon },
+  { to: "/", label: "总览", num: "01", icon: DeskIcon },
+  { to: "/runs", label: "运行", num: "02", icon: RunsIcon },
+  { to: "/evidence", label: "证据", num: "03", icon: EvidenceIcon },
+  { to: "/pipeline", label: "流程", num: "04", icon: PipelineIcon },
+  { to: "/archive", label: "档案", num: "05", icon: ArchiveIcon },
 ];
 
 const CRUMB: Record<string, string> = {
-  "/": "DESK",
-  "/runs": "RUN REGISTER",
-  "/evidence": "EVIDENCE",
-  "/pipeline": "PIPELINE",
-  "/archive": "ARCHIVE",
+  "/": "总览",
+  "/runs": "运行台账",
+  "/evidence": "证据",
+  "/pipeline": "流程",
+  "/archive": "档案",
 };
 
 function Palette({ open, onClose }: { open: boolean; onClose: () => void }) {
@@ -58,12 +58,12 @@ function Palette({ open, onClose }: { open: boolean; onClose: () => void }) {
 
   return (
     <div className="palette-backdrop" role="presentation" onMouseDown={onClose}>
-      <div className="palette" role="dialog" aria-modal="true" aria-label="Search" onMouseDown={(e) => e.stopPropagation()}>
+      <div className="palette" role="dialog" aria-modal="true" aria-label="搜索" onMouseDown={(e) => e.stopPropagation()}>
         <input
           className="palette__input"
           autoFocus
           value={query}
-          placeholder="Search runs, videos, categories…"
+          placeholder="搜索运行、视频、类别…"
           onChange={(e) => setQuery(e.target.value)}
           onKeyDown={(e) => {
             if (e.key === "Escape") onClose();
@@ -80,9 +80,9 @@ function Palette({ open, onClose }: { open: boolean; onClose: () => void }) {
         />
         <div className="palette__results">
           {!query.trim() ? (
-            <div className="palette__empty">Type a video name, a run label, or a category. Esc closes.</div>
+            <div className="palette__empty">输入视频名、运行标签或类别。Esc 关闭。</div>
           ) : hits.length === 0 ? (
-            <div className="palette__empty">No match in the local register.</div>
+            <div className="palette__empty">本地台账中没有匹配项。</div>
           ) : (
             hits.map((hit, i) => (
               <button
@@ -93,7 +93,7 @@ function Palette({ open, onClose }: { open: boolean; onClose: () => void }) {
                 onMouseEnter={() => setIndex(i)}
               >
                 <b>{hit.type === "run" ? hit.label : hit.label}</b>
-                <span>{hit.type} · {hit.sub}</span>
+                <span>{hit.type === "run" ? "运行" : "视频"} · {hit.sub}</span>
               </button>
             ))
           )}
@@ -108,7 +108,7 @@ export default function Shell() {
   const [paletteOpen, setPaletteOpen] = useState(false);
   const { data: health } = useAsync<Health>(() => api.health(), []);
   const { data: runs } = useAsync(() => api.runs(), []);
-  const crumb = useMemo(() => CRUMB[location.pathname] ?? "CASE FILE", [location.pathname]);
+  const crumb = useMemo(() => CRUMB[location.pathname] ?? "卷宗", [location.pathname]);
 
   useEffect(() => {
     const onKey = (event: KeyboardEvent) => {
@@ -137,10 +137,10 @@ export default function Shell() {
           <span className="rail__mark"><MarkIcon size={17} /></span>
           <div>
             <div className="rail__wordmark">VADTree</div>
-            <div className="rail__kicker">training-free<br />explainable</div>
+            <div className="rail__kicker">免训练<br />可解释</div>
           </div>
         </div>
-        <nav className="rail__nav" aria-label="Primary">
+        <nav className="rail__nav" aria-label="主导航">
           {NAV.map((item) => {
             const Icon = item.icon;
             return (
@@ -162,12 +162,12 @@ export default function Shell() {
         <div className="rail__foot">
           <div className="rail__status">
             <StatusDot status={online ? "verified" : "fail"} />
-            <span>{online ? "local ready" : "api offline"}</span>
+            <span>{online ? "本地就绪" : "接口离线"}</span>
           </div>
           <div className="rail__meta">
-            {health?.git ? "commit " + health.git : "no git metadata"}<br />
-            {health?.gpu?.name ? health.gpu.name : "cpu-only"}<br />
-            {health?.result ? (health.result.bytes / 1073741824).toFixed(2) + " GB result" : "result not indexed"}
+            {health?.git ? "提交 " + health.git : "无 git 元数据"}<br />
+            {health?.gpu?.name ? health.gpu.name : "仅 CPU"}<br />
+            {health?.result ? (health.result.bytes / 1073741824).toFixed(2) + " GB 结果" : "结果未索引"}
           </div>
         </div>
       </aside>
@@ -181,9 +181,9 @@ export default function Shell() {
           <div className="topbar__right">
             <span className="topbar__status">
               <StatusDot status={online ? "verified" : "warning"} />
-              {online ? "local console" : "connecting"}
+              {online ? "本地控制台" : "连接中"}
             </span>
-            <button className="kbd" onClick={() => setPaletteOpen(true)} aria-label="Search">
+            <button className="kbd" onClick={() => setPaletteOpen(true)} aria-label="搜索">
               <SearchIcon size={11} />
               <span>⌘K</span>
             </button>

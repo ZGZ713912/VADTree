@@ -16,9 +16,9 @@
   --ochre: #a97425;
   --ochre-wash: rgba(169, 116, 37, 0.1);
   --blue-ink: #2e4f6b;
-  --serif: "Fraunces Variable", "Iowan Old Style", Georgia, serif;
-  --sans: "IBM Plex Sans", "Helvetica Neue", system-ui, sans-serif;
-  --mono: "IBM Plex Mono", "SFMono-Regular", ui-monospace, monospace;
+  --serif: "Fraunces Variable", "Noto Serif CJK SC", "Songti SC", "Iowan Old Style", Georgia, serif;
+  --sans: "IBM Plex Sans", "Noto Sans CJK SC", "PingFang SC", "Microsoft YaHei", "Helvetica Neue", system-ui, sans-serif;
+  --mono: "IBM Plex Mono", "Noto Sans Mono CJK SC", "SFMono-Regular", ui-monospace, monospace;
   --rail: 248px;
   --gutter: clamp(20px, 3.2vw, 48px);
   --max: 1560px;
@@ -44,7 +44,7 @@ body {
   color: var(--ink);
   font-family: var(--sans);
   font-size: 15px;
-  line-height: 1.6;
+  line-height: 1.7;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
 }

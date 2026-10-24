@@ -76,9 +76,29 @@ export function relativeTime(iso: string | null | undefined): string {
   if (Number.isNaN(then)) return iso;
   const diff = Date.now() - then;
   const minutes = Math.round(diff / 60000);
-  if (minutes < 1) return "just now";
-  if (minutes < 60) return minutes + "m ago";
+  if (minutes < 1) return "刚刚";
+  if (minutes < 60) return minutes + " 分钟前";
   const hours = Math.round(minutes / 60);
-  if (hours < 24) return hours + "h ago";
-  return Math.round(hours / 24) + "d ago";
+  if (hours < 24) return hours + " 小时前";
+  return Math.round(hours / 24) + " 天前";
+}
+
+/** Translate the known reproduce.py check details for the Chinese console. */
+export function reproDetailZh(detail?: string | null): string {
+  if (!detail) return "—";
+  if (detail.startsWith("HGTree output is semantically identical")) {
+    return "HGTree 输出与发布结构语义一致";
+  }
+  if (detail.startsWith("refined scores and aggregate ROC/PR metrics match")) {
+    return "细化分数与聚合 ROC/PR 与发布运行一致";
+  }
+  if (detail.startsWith("ensemble scores and metrics match")) {
+    return "集成分数与指标与发布运行一致";
+  }
+  const warning = detail.match(/aggregate delta ([\d.]+), max segment delta ([\d.]+)/);
+  if (detail.startsWith("refined scores are not bit-identical") && warning) {
+    return "细化分数未逐位一致（聚合 Δ" + warning[1] + "，最大片段 Δ" + warning[2] +
+      "），与 numpy argsort 的 tie 顺序敏感一致";
+  }
+  return detail;
 }

@@ -1,9 +1,9 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 
-import { api, formatBytes, formatNumber, relativeTime } from "../api";
+import { api, formatBytes, relativeTime, reproDetailZh } from "../api";
 import { ArrowIcon, PlayIcon, StopIcon } from "../components/Icons";
-import { StatusTag } from "../components/Status";
+import { StatusTag, statusLabel } from "../components/Status";
 import { useAsync, useTitle } from "../hooks";
 import type { Health, Job, Pipeline } from "../types";
 
@@ -15,39 +15,39 @@ const DATASETS = [
 
 const STEPS = [
   { id: "2", label: "HGTree" },
-  { id: "6", label: "Refinement" },
-  { id: "7", label: "Ensemble" },
+  { id: "6", label: "细化" },
+  { id: "7", label: "集成" },
 ];
 
 function EnvironmentSummary({ health }: { health: Health | null }) {
-  if (!health) return <div className="loading">checking environment…</div>;
+  if (!health) return <div className="loading">正在检查环境…</div>;
   const videos = health.videos;
   return (
     <div className="env-summary">
       <div className="env-summary__head">
-        <span className="micro">Environment / local</span>
-        <span className="tag tag--moss">{health.dist_built ? "console built" : "api ready"}</span>
+        <span className="micro">环境 / 本机</span>
+        <span className="tag tag--moss">{health.dist_built ? "控制台已构建" : "接口就绪"}</span>
       </div>
       <div className="env-summary__grid">
-        <div><span>python</span><b>{health.venv.python ?? "—"}</b></div>
+        <div><span>Python</span><b>{health.venv.python ?? "—"}</b></div>
         <div><span>numpy</span><b>{health.packages.numpy ?? "—"}</b></div>
         <div><span>sklearn</span><b>{health.packages.sklearn ?? "—"}</b></div>
-        <div><span>gpu</span><b>{health.gpu?.name ?? "cpu only"}</b></div>
-        <div><span>result</span><b>{formatBytes(health.result.bytes)}</b></div>
-        <div><span>videos</span><b className={videos.configured ? "" : "ochre"}>{videos.configured ? "configured" : "not configured"}</b></div>
+        <div><span>GPU</span><b>{health.gpu?.name ?? "仅 CPU"}</b></div>
+        <div><span>结果</span><b>{formatBytes(health.result.bytes)}</b></div>
+        <div><span>视频</span><b className={videos.configured ? "" : "ochre"}>{videos.configured ? "已配置" : "未配置"}</b></div>
       </div>
       <div className="env-summary__note">
         {videos.configured
-          ? "Raw videos are available; steps 1/3/4/5 can be attempted with the matching checkpoints."
-          : "Steps 1/3/4/5 are blocked: no raw video root is configured. Steps 2/6/7 only need the published JSON/pickles."}
+          ? "原始视频已配置；在具备对应权重时，可以尝试步骤 1/3/4/5。"
+          : "步骤 1/3/4/5 受阻：未配置原始视频目录。步骤 2/6/7 只需要已发布的 JSON / pickle。"}
       </div>
-      <Link className="section-head__action" to="/archive">full environment <ArrowIcon size={10} /></Link>
+      <Link className="section-head__action" to="/archive">完整环境 <ArrowIcon size={10} /></Link>
     </div>
   );
 }
 
 function StageList({ pipeline }: { pipeline: Pipeline | null }) {
-  if (!pipeline) return <div className="loading">reading stage status…</div>;
+  if (!pipeline) return <div className="loading">正在读取阶段状态…</div>;
   return (
     <div className="stage-list">
       {pipeline.stages.map((stage) => (
@@ -60,12 +60,12 @@ function StageList({ pipeline }: { pipeline: Pipeline | null }) {
             </div>
             <p className="stage__note">{stage.note}</p>
             <div className="stage__meta">
-              <span><b>needs</b> {stage.needs.join(" · ")}</span>
-              <span><b>writes</b> {stage.outputs.join(" · ")}</span>
+              <span><b>需要</b> {stage.needs.join(" · ")}</span>
+              <span><b>写出</b> {stage.outputs.join(" · ")}</span>
             </div>
             <div className="stage__cmd">{stage.command}</div>
             {stage.blockers.length ? (
-              <div className="stage__blockers">blocked · {stage.blockers.join(" · ")}</div>
+              <div className="stage__blockers">受阻 · {stage.blockers.join(" · ")}</div>
             ) : null}
           </div>
           <div className="stage__side">
@@ -76,7 +76,7 @@ function StageList({ pipeline }: { pipeline: Pipeline | null }) {
                   <div className="stage-check" key={check.id}>
                     <span>{check.id.replace(/^(UCF_Crime_test|MSAD_test|XD_Violence_test)-/, "")}</span>
                     <b className={check.status === "warning" ? "ochre" : check.status === "pass" ? "moss" : "red"}>
-                      {check.status}
+                      {statusLabel(check.status)}
                       {check.delta !== null && check.delta !== undefined ? " Δ" + check.delta : ""}
                     </b>
                   </div>
@@ -99,10 +99,10 @@ function JobConsole({ job }: { job: Job | null }) {
     return (
       <div className="job-console">
         <div className="job-console__head">
-          <h2 className="job-console__title">No job selected</h2>
-          <span className="micro">sandbox · runs/&lt;id&gt;/</span>
+          <h2 className="job-console__title">未选择任务</h2>
+          <span className="micro">沙箱 · runs/&lt;id&gt;/</span>
         </div>
-        <div className="empty">Run a verification or an artifact check. Logs and generated files stay under runs/.</div>
+        <div className="empty">运行一次复现验证或产物校验。日志与生成文件都留在 runs/。</div>
       </div>
     );
   }
@@ -112,22 +112,22 @@ function JobConsole({ job }: { job: Job | null }) {
     <div className="job-console">
       <div className="job-console__head">
         <div>
-          <h2 className="job-console__title">{job.kind === "verify" ? "Artifact check" : "Reproduction job"}</h2>
+          <h2 className="job-console__title">{job.kind === "verify" ? "产物校验" : "复现任务"}</h2>
           <div className="micro">
-            {job.id} · {job.datasets.join(", ") || "manifest"} {job.steps ? "· steps " + job.steps : ""} · {job.elapsed}s
+            {job.id} · {job.datasets.join(", ") || "清单"} {job.steps ? "· 步骤 " + job.steps : ""} · {job.elapsed} 秒
           </div>
         </div>
         <StatusTag status={job.status} />
       </div>
-      <pre className="job-console__log" ref={logRef}>{job.log_text || "waiting for output…"}</pre>
+      <pre className="job-console__log" ref={logRef}>{job.log_text || "等待输出…"}</pre>
       {checks.length ? (
         <div className="job-report">
-          <div className="micro" style={{ marginBottom: 5 }}>Report summary</div>
+          <div className="micro" style={{ marginBottom: 5 }}>报告摘要</div>
           {checks.map((check) => (
             <div className="job-report__row" key={check.id}>
               <span>{check.id}</span>
               <StatusTag status={check.status} />
-              <span className="mono">{check.detail}</span>
+              <span className="mono">{reproDetailZh(check.detail)}</span>
             </div>
           ))}
         </div>
@@ -138,7 +138,7 @@ function JobConsole({ job }: { job: Job | null }) {
 }
 
 export default function PipelinePage() {
-  useTitle("Pipeline");
+  useTitle("流程");
   const pipeline = useAsync<Pipeline>(() => api.pipeline(), []);
   const health = useAsync<Health>(() => api.health(), []);
   const jobsQuery = useAsync(() => api.jobs(), []);
@@ -181,7 +181,7 @@ export default function PipelinePage() {
 
   const run = async () => {
     if (!datasets.length || !steps.length) {
-      setMessage("Pick at least one dataset and one stage.");
+      setMessage("请至少选择一个数据集和一个阶段。");
       return;
     }
     setSubmitting(true);
@@ -229,22 +229,22 @@ export default function PipelinePage() {
       <header className="page-head">
         <div>
           <div className="page-head__kicker micro">
-            <span>Pipeline / docket</span><span className="dot dot--sm" style={{ background: "var(--vermilion)" }} />
-            <span>{total ? total + " checks" : "not checked"}</span>
+            <span>流程 / 清单</span><span className="dot dot--sm" style={{ background: "var(--vermilion)" }} />
+            <span>{total ? total + " 项校验" : "尚未校验"}</span>
           </div>
-          <h1 className="page-head__title">The docket, <em>with receipts.</em></h1>
+          <h1 className="page-head__title">每一步，<em>都有回执。</em></h1>
           <p className="page-head__lede">
-            Steps 2, 6 and 7 are deterministic and can be re-run into a sandbox. Steps 1, 3, 4 and 5 need raw
-            videos and model checkpoints; this desk says so instead of offering a dead button.
+            步骤 2、6、7 是确定性的，可以重跑到沙箱；步骤 1、3、4、5 需要原始
+            视频与模型权重。这里直接说明阻塞，而不是摆一个死按钮。
           </p>
         </div>
         <div className="page-head__side">
-          <span className="tag tag--ink">LOCAL EXECUTION</span>
+          <span className="tag tag--ink">本地执行</span>
           <div className="stamp">
-            <b>sandbox · runs/&lt;job-id&gt;/</b>
-            no writes to result/<br />
-            log · report.json<br />
-            {busy ? "job running" : "idle"}
+            <b>沙箱 · runs/&lt;job-id&gt;/</b>
+            不写入 result/<br />
+            日志 · report.json<br />
+            {busy ? "任务运行中" : "空闲"}
           </div>
         </div>
       </header>
@@ -252,12 +252,12 @@ export default function PipelinePage() {
       <div className="pipeline-top">
         <section className="run-panel" aria-labelledby="run-verification">
           <div className="run-panel__head">
-            <h2 className="run-panel__title" id="run-verification">Run a verification</h2>
-            <span className="micro">{busy ? "busy" : "ready"}</span>
+            <h2 className="run-panel__title" id="run-verification">运行复现验证</h2>
+            <span className="micro">{busy ? "运行中" : "就绪"}</span>
           </div>
           <div className="run-panel__body">
             <div>
-              <div className="micro" style={{ marginBottom: 6 }}>Datasets</div>
+              <div className="micro" style={{ marginBottom: 6 }}>数据集</div>
               <div className="check-row">
                 {DATASETS.map((dataset) => (
                   <label className="check" key={dataset.id}>
@@ -272,7 +272,7 @@ export default function PipelinePage() {
               </div>
             </div>
             <div>
-              <div className="micro" style={{ marginBottom: 6 }}>Stages</div>
+              <div className="micro" style={{ marginBottom: 6 }}>阶段</div>
               <div className="check-row">
                 {STEPS.map((step) => (
                   <label className="check" key={step.id}>
@@ -289,25 +289,25 @@ export default function PipelinePage() {
           </div>
           <div className="run-panel__actions">
             <button className="button" onClick={run} disabled={submitting || busy}>
-              <PlayIcon size={11} /> {busy ? "running…" : "run verification"}
+              <PlayIcon size={11} /> {busy ? "运行中…" : "运行验证"}
             </button>
             {busy ? (
-              <button className="button button--ghost" onClick={stop}><StopIcon size={11} /> stop</button>
+              <button className="button button--ghost" onClick={stop}><StopIcon size={11} /> 停止</button>
             ) : null}
             <button className="button button--ghost" onClick={verify} disabled={submitting || busy}>
-              verify artifacts
+              校验产物
             </button>
           </div>
           <p className="run-panel__note">
-            The job shells out to <span className="mono">scripts/reproduce.py</span> and compares scores plus
-            aggregate ROC/PR with the published JSON. It never writes into <span className="mono">result/</span>.
+            任务会调用 <span className="mono">scripts/reproduce.py</span>，核对分数与
+            聚合 ROC/PR；不会写入 <span className="mono">result/</span>。
           </p>
           {message ? <div className="error-box" style={{ marginTop: 10 }}>{message}</div> : null}
           {active ? (
             <div className="run-panel__active">
               <StatusTag status={active.status} />
               <span className="mono">{active.id}</span>
-              <button className="section-head__action" onClick={() => setActive(null)}>clear</button>
+              <button className="section-head__action" onClick={() => setActive(null)}>清除</button>
             </div>
           ) : null}
         </section>
@@ -318,10 +318,10 @@ export default function PipelinePage() {
         <div className="section-head">
           <div className="section-head__left">
             <span className="section-head__index">01</span>
-            <h2 className="section-head__title">Seven stages</h2>
+            <h2 className="section-head__title">七个阶段</h2>
           </div>
           <div className="section-head__note">
-            verified · checked against released JSON · warning · non-bit-identical but close · asset · present but not regenerated
+            已验证 · 与发布 JSON 对账 · 警告 · 非逐位一致但接近 · 仅产物 · 已存在但未重跑
           </div>
         </div>
         <StageList pipeline={pipeline.data} />
@@ -331,20 +331,20 @@ export default function PipelinePage() {
         <div className="section-head">
           <div className="section-head__left">
             <span className="section-head__index">02</span>
-            <h2 className="section-head__title">Job console</h2>
+            <h2 className="section-head__title">作业控制台</h2>
           </div>
-          <div className="section-head__note">Every run is local, logged, and disposable.</div>
+          <div className="section-head__note">每次运行都在本地，有日志，也可丢弃。</div>
         </div>
         <JobConsole job={active} />
         <div className="job-list">
           {jobs.length ? jobs.slice(0, 8).map((job) => (
             <button className="job-row" key={job.id} onClick={() => setActive(job)}>
-              <span><b>{job.id}</b> · {job.kind} · {job.datasets.join(", ") || "manifest"} {job.steps ? "· " + job.steps : ""}</span>
+              <span><b>{job.id}</b> · {job.kind === "verify" ? "产物校验" : "复现"} · {job.datasets.join(", ") || "清单"} {job.steps ? "· 步骤 " + job.steps : ""}</span>
               <StatusTag status={job.status} />
               <span>{relativeTime(job.created_at)}</span>
-              <span>{job.elapsed}s</span>
+              <span>{job.elapsed} 秒</span>
             </button>
-          )) : <div className="empty">No jobs yet. The first verification will appear here.</div>}
+          )) : <div className="empty">还没有任务。第一次复现验证会出现在这里。</div>}
         </div>
       </section>
     </div>

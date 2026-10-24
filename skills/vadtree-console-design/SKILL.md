@@ -90,6 +90,7 @@ description: 为 VADTree 证据控制台（视频异常检测的可解释 WebUI�
 - **Fraunces Variable**：页面标题、章节标题、巨大指标数字。字号大时启用 optical size，字重 400–600；数字可用 300–400 形成编辑感。
 - **IBM Plex Sans**：正文、按钮、表单。400 / 500 / 600。
 - **IBM Plex Mono**：时间码、ID、参数、坐标轴、标签。400 / 500；tabular-nums。
+- **中文界面**：Fraunces / IBM Plex 只承担拉丁字母与数字；中文标题回退到 Noto Serif CJK SC，正文回退到 Noto Sans CJK SC。中文标题不要用合成斜体，强调只用朱红或字重，不改变字形。
 
 字号建议：
 - display 72–96 / 0.94；h1 48–60 / 1.0；h2 30–36 / 1.1；h3 20–22 / 1.25；body 15 / 1.65；small 13 / 1.5；micro 10.5 uppercase + letter-spacing .12em。
