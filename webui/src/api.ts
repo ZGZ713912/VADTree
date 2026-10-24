@@ -1,6 +1,6 @@
 import type {
   Artifacts, Evidence, Health, Job, Overview, Pipeline, ReproductionResponse,
-  Run, RunDetail, SearchHit,
+  Run, RunDetail, SearchHit, UploadMeta, VlmStatus,
 } from "./types";
 
 const BASE = import.meta.env.VITE_API_BASE ?? "";
@@ -36,8 +36,15 @@ export const api = {
   reproduction: () => request<ReproductionResponse>("/api/reproduction"),
   jobs: () => request<{ jobs: Job[] }>("/api/jobs"),
   job: (id: string) => request<Job>("/api/jobs/" + encodeURIComponent(id)),
-  createJob: (payload: { kind: string; datasets: string[]; steps: string }) =>
+  createJob: (payload: {
+    kind: string;
+    datasets?: string[];
+    steps?: string;
+    params?: Record<string, unknown>;
+    [key: string]: unknown;
+  }) =>
     request<Job>("/api/jobs", { method: "POST", body: JSON.stringify(payload) }),
+  vlmStatus: () => request<VlmStatus>("/api/query/status"),
   cancelJob: (id: string) =>
     request<Job>("/api/jobs/" + encodeURIComponent(id) + "/cancel", { method: "POST" }),
   search: (q: string) => request<{ hits: SearchHit[] }>("/api/search?q=" + encodeURIComponent(q)),
@@ -101,4 +108,28 @@ export function reproDetailZh(detail?: string | null): string {
       "），与 numpy argsort 的 tie 顺序敏感一致";
   }
   return detail;
+}
+export function uploadVideo(
+  file: File,
+  onProgress?: (percent: number) => void,
+): Promise<UploadMeta> {
+  return new Promise((resolve, reject) => {
+    const xhr = new XMLHttpRequest();
+    xhr.open("POST", BASE + "/api/uploads");
+    xhr.setRequestHeader("X-Filename", encodeURIComponent(file.name));
+    xhr.upload.onprogress = (event) => {
+      if (onProgress && event.lengthComputable) onProgress(Math.round((event.loaded / event.total) * 100));
+    };
+    xhr.onload = () => {
+      try {
+        const body = JSON.parse(xhr.responseText);
+        if (xhr.status >= 200 && xhr.status < 300) resolve(body as UploadMeta);
+        else reject(new Error(body?.error || "上传失败"));
+      } catch {
+        reject(new Error("上传返回了无法解析的响应"));
+      }
+    };
+    xhr.onerror = () => reject(new Error("上传网络错误"));
+    xhr.send(file);
+  });
 }

@@ -82,6 +82,9 @@ await noOverflow("overview-mobile", m);
 await m.goto(base + "/evidence", { waitUntil: "networkidle" });
 await m.waitForSelector(".timeline__svg");
 await noOverflow("evidence-mobile", m);
+await m.goto(base + "/query", { waitUntil: "networkidle" });
+await m.waitForSelector(".query-layout");
+await noOverflow("query-mobile", m);
 results.push({ check: "mobile-console", ok: mobileErrors.length === 0, detail: mobileErrors });
 
 console.log(JSON.stringify({ results, errors, mobileErrors }, null, 2));

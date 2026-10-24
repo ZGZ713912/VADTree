@@ -6,6 +6,7 @@ import ArchivePage from "./pages/Archive";
 import EvidencePage from "./pages/Evidence";
 import OverviewPage from "./pages/Overview";
 import PipelinePage from "./pages/Pipeline";
+import QueryPage from "./pages/Query";
 import RunsPage from "./pages/Runs";
 
 function ScrollToTop() {
@@ -39,6 +40,7 @@ export default function App() {
           <Route index element={<OverviewPage />} />
           <Route path="runs" element={<RunsPage />} />
           <Route path="evidence" element={<EvidencePage />} />
+          <Route path="query" element={<QueryPage />} />
           <Route path="pipeline" element={<PipelinePage />} />
           <Route path="archive" element={<ArchivePage />} />
           <Route path="*" element={<NotFound />} />

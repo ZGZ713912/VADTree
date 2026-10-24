@@ -120,6 +120,7 @@ The server binds to 127.0.0.1 and has no authentication; it is a single-user loc
 | Runs | Every published refinement and ensemble, including non-headline variants; featured marks the README configuration. |
 | Evidence | One video on one shared time axis: ensemble curve, GT bands, coarse/fine nodes, captions, and step-4 CoT. |
 | Pipeline | Seven stages with real verification state; steps 2/6/7 run into runs/&lt;job-id&gt;/ and stream logs. |
+| Query | Upload a video, describe an event in natural language, and run a local Chinese-CLIP window match with a heuristic score, time localization and evidence frames. |
 | Archive | MANIFEST bundles, local environment, and the reproduction checks recorded by scripts/reproduce.py. |
 
 The UI intentionally shows uncertainty: XD refinement warnings keep their measured delta, blocked stages name the missing videos/checkpoints, and missing JSON fields render as “—” rather than invented curves. The Pipeline page runs the released configuration as a sandboxed verification; custom hyperparameter sweeps stay on the CLI (refinement_eval.py / correlation_eval.py) so the console never silently overwrites result/.
@@ -132,6 +133,21 @@ The UI intentionally shows uncertainty: XD refinement warnings keep their measur
 - Screenshots: docs/screenshots/
 
 The skill is adapted from the methodology of [distinctive-ai-design](https://github.com/houxin0010/distinctive-ai-design) and rewritten for this console's paper/ink/vermilion “evidence desk” language.
+
+## Description query (optional local Chinese-CLIP)
+
+The Query page adds an open-vocabulary channel: upload a short video, enter a natural-language description, and the backend samples time windows, compares each frame against the description with a local Chinese-CLIP model, and aggregates the best window into a heuristic score and coverage timeline.
+
+This is deliberately separate from VADTree's fixed-category scores: the number is a **text/image similarity calibration, not a calibrated probability**, and it is not comparable to the ROC/PR values on the Desk page. Chinese-CLIP does not produce a chain of thought; it is a fast local semantic matcher. See [docs/QUERY.md](docs/QUERY.md) for the full contract and limits.
+
+![Description query result](docs/screenshots/query.png)
+
+~~~bash
+bash scripts/setup_vlm.sh          # creates .venv-vlm and downloads Chinese-CLIP (~753MB)
+# restart the console, then open /query
+~~~
+
+The upload, frames, query JSON and logs stay under uploads/ and runs/; they never touch result/. The main console still works without this optional backend; the Query page will show “CLIP 未就绪” until it is installed.
 
 ## Reproduction
 

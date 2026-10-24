@@ -45,3 +45,7 @@ __pycache__/
 
 # Sandboxed pipeline jobs
 /runs/
+
+# Uploaded query videos and optional local VLM weights
+/uploads/
+/models/

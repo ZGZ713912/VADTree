@@ -59,6 +59,16 @@ export function SearchIcon(props: IconProps) {
   return <Svg {...props}><circle cx="9" cy="9" r="5" /><path d="m13 13 4 4" /></Svg>;
 }
 
+export function QueryIcon(props: IconProps) {
+  return (
+    <Svg {...props}>
+      <circle cx="8.5" cy="8.5" r="5.5" />
+      <path d="m12.5 12.5 4 4" />
+      <path d="m7 6.7 2.4 1.8L7 10.3z" fill="currentColor" stroke="none" />
+    </Svg>
+  );
+}
+
 export function ArrowIcon(props: IconProps) {
   return <Svg {...props}><path d="M4 16 16 4M7 4h9v9" /></Svg>;
 }

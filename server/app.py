@@ -18,7 +18,7 @@ from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 from urllib.parse import parse_qs, unquote, urlparse
 
-from . import data, health, pipeline
+from . import data, health, pipeline, uploads
 from .jobs import manager
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
@@ -70,6 +70,19 @@ class Handler(BaseHTTPRequestHandler):
         except Exception as exc:  # noqa: BLE001
             raise ValueError("invalid JSON body: %s" % exc)
 
+    def _file(self, path: Path, content_type: str):
+        if not path.exists() or not path.is_file():
+            self._error("not found", 404)
+            return
+        body = path.read_bytes()
+        self.send_response(200)
+        self.send_header("Content-Type", content_type)
+        self.send_header("Content-Length", str(len(body)))
+        self.send_header("Cache-Control", "no-store")
+        self._cors()
+        self.end_headers()
+        self.wfile.write(body)
+
     def log_message(self, fmt, *args):
         # Keep the console quiet; jobs have their own logs.
         if "/api/" in (args[0] if args else ""):
@@ -99,13 +112,34 @@ class Handler(BaseHTTPRequestHandler):
         parsed = urlparse(self.path)
         path = unquote(parsed.path)
         try:
-            if path == "/api/jobs":
+            if path == "/api/uploads":
+                length = int(self.headers.get("Content-Length") or 0)
+                if length <= 0:
+                    self._error("empty upload", 400)
+                    return
+                if length > uploads.MAX_UPLOAD:
+                    self._error("file too large (max 1GB)", 413)
+                    return
+                filename = unquote(self.headers.get("X-Filename") or "video.mp4")
+                try:
+                    meta = uploads.save_upload(self.rfile, length, filename)
+                except Exception as exc:  # noqa: BLE001
+                    self._error("upload failed: %s" % exc, 400)
+                    return
+                self._json(meta, status=201)
+            elif path == "/api/jobs":
                 body = self._read_json()
-                job = manager.create(
-                    body.get("kind", "reproduce"),
-                    datasets=body.get("datasets") or ["UCF"],
-                    steps=body.get("steps") or "6,7",
-                )
+                kind = body.get("kind", "reproduce")
+                try:
+                    job = manager.create(
+                        kind,
+                        datasets=body.get("datasets") or ([] if kind == "query" else ["UCF"]),
+                        steps=body.get("steps") or ("" if kind == "query" else "6,7"),
+                        params=body.get("params") or body,
+                    )
+                except ValueError as exc:
+                    self._error(str(exc), 400)
+                    return
                 self._json(job, status=201)
             elif path.startswith("/api/jobs/") and path.endswith("/cancel"):
                 job_id = path[len("/api/jobs/"):-len("/cancel")].strip("/")
@@ -167,6 +201,25 @@ class Handler(BaseHTTPRequestHandler):
                 self._json(job)
         elif path == "/api/search":
             self._json({"hits": data.search(query.get("q", ""))})
+        elif path == "/api/query/status":
+            self._json(uploads.vlm_status())
+        elif path.startswith("/api/uploads/"):
+            rest = path[len("/api/uploads/"):].strip("/")
+            parts = [p for p in rest.split("/") if p]
+            if len(parts) == 1:
+                meta = uploads.get_upload(parts[0])
+                if not meta:
+                    self._error("upload not found", 404)
+                else:
+                    self._json(meta)
+            elif len(parts) >= 2:
+                asset = uploads.asset(parts[0], "/".join(parts[1:]))
+                if not asset:
+                    self._error("asset not found", 404)
+                else:
+                    self._file(asset, "image/jpeg")
+            else:
+                self._error("not found", 404)
         else:
             self._error("not found", 404)
 

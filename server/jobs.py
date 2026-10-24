@@ -1,15 +1,16 @@
 """Background jobs for the evidence console.
 
-Only two kinds of work are exposed, both of which write into runs/<job-id>/
-and never into result/:
+Jobs write under runs/<job-id>/ or uploads/<upload-id>/ and never into result/:
 
-* reproduce   - run scripts/reproduce.py for selected datasets/steps
-* verify      - hash-check the release artifacts against MANIFEST.json
+* reproduce  - run scripts/reproduce.py for selected datasets/steps
+* verify     - hash-check the release artifacts against MANIFEST.json
+* query      - run scripts/query_video.py on an uploaded video + description
 """
 from __future__ import annotations
 
 import json
 import os
+import re
 import secrets
 import signal
 import subprocess
@@ -21,9 +22,11 @@ from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 RUNS_DIR = REPO_ROOT / "runs"
+UPLOADS_DIR = REPO_ROOT / "uploads"
 LOG_LIMIT = 48_000
 DATASETS = {"UCF", "MSAD", "XD"}
 STEPS = {"2", "6", "7"}
+UPLOAD_ID_RE = re.compile(r"^[a-f0-9]{8,64}$")
 
 
 def _now():
@@ -35,11 +38,16 @@ def _python():
     return str(candidate) if candidate.exists() else sys.executable
 
 
+def _vlm_python():
+    return REPO_ROOT / ".venv-vlm" / "bin" / "python"
+
+
 class JobManager:
     def __init__(self):
         self._jobs = {}
         self._lock = threading.Lock()
         RUNS_DIR.mkdir(parents=True, exist_ok=True)
+        UPLOADS_DIR.mkdir(parents=True, exist_ok=True)
 
     def _update(self, job, **fields):
         with self._lock:
@@ -66,11 +74,51 @@ class JobManager:
             data = fh.read().decode("utf-8", errors="replace")
         return data
 
-    def create(self, kind, datasets=None, steps=None):
-        if kind not in ("reproduce", "verify"):
+    def _query_command(self, params):
+        upload_id = str(params.get("upload_id") or "").strip()
+        if not UPLOAD_ID_RE.match(upload_id):
+            raise ValueError("invalid upload id")
+        description = str(params.get("description") or "").strip()
+        if not description:
+            raise ValueError("description is required")
+        if len(description) > 500:
+            raise ValueError("description is too long (max 500 chars)")
+        upload_dir = UPLOADS_DIR / upload_id
+        videos = sorted(upload_dir.glob("video.*"))
+        if not videos:
+            raise ValueError("upload not found")
+        python = _vlm_python()
+        if not python.exists():
+            raise ValueError("CLIP 环境未安装：请先运行 scripts/setup_vlm.sh")
+        model = str(params.get("model") or os.environ.get(
+            "VADTREE_VLM_MODEL", str(REPO_ROOT / "models" / "chinese-clip-vit-base-patch16")))
+        window = min(30.0, max(2.0, float(params.get("window", 8))))
+        stride = min(window, max(1.0, float(params.get("stride", 4))))
+        frames = min(12, max(2, int(params.get("frames", 6))))
+        max_windows = min(60, max(1, int(params.get("max_windows", 12))))
+        out = upload_dir / "query.json"
+        thumb_dir = upload_dir / "frames"
+        cmd = [
+            str(python), "scripts/query_video.py",
+            "--video", str(videos[0]),
+            "--description", description,
+            "--out", str(out),
+            "--thumb-dir", str(thumb_dir),
+            "--model", model,
+            "--window", str(window),
+            "--stride", str(stride),
+            "--frames", str(frames),
+            "--max-windows", str(max_windows),
+        ]
+        return cmd, upload_id, out
+
+    def create(self, kind, datasets=None, steps=None, params=None):
+        if kind not in ("reproduce", "verify", "query"):
             raise ValueError("unknown job kind")
-        datasets = datasets or ["UCF"]
-        steps = steps or "6,7"
+        params = params or {}
+        datasets = datasets or ([] if kind == "query" else ["UCF"])
+        steps = steps or ("" if kind == "query" else "6,7")
+        report_path = None
         if kind == "reproduce":
             bad = set(datasets) - DATASETS
             if bad:
@@ -83,15 +131,22 @@ class JobManager:
         job_dir = RUNS_DIR / job_id
         job_dir.mkdir(parents=True, exist_ok=True)
         log_path = job_dir / "job.log"
-        python = _python()
+        upload_id = None
         if kind == "reproduce":
-            cmd = [python, "scripts/reproduce.py", "--steps", steps,
+            cmd = [_python(), "scripts/reproduce.py", "--steps", steps,
                    "--keep", "--workdir", str(job_dir / "work"),
                    "--out", str(job_dir / "report.json")]
             for ds in datasets:
                 cmd += ["--dataset", ds]
+            report_path = job_dir / "report.json"
+        elif kind == "verify":
+            cmd = [_python(), "scripts/fetch_artifacts.py", "--verify"]
+            datasets = []
+            steps = ""
         else:
-            cmd = [python, "scripts/fetch_artifacts.py", "--verify"]
+            cmd, upload_id, report_path = self._query_command(params)
+            datasets = []
+            steps = ""
         job = {
             "id": job_id,
             "kind": kind,
@@ -102,9 +157,12 @@ class JobManager:
             "finished_at": None,
             "datasets": datasets,
             "steps": steps,
+            "params": params if kind == "query" else {},
+            "upload_id": upload_id,
             "command": " ".join(cmd),
             "dir": str(job_dir),
             "log_path": str(log_path),
+            "report_path": str(report_path) if report_path else None,
             "exit_code": None,
             "report": None,
             "error": None,
@@ -121,6 +179,7 @@ class JobManager:
         env = dict(os.environ)
         env["PYTHONUNBUFFERED"] = "1"
         env["MPLBACKEND"] = "Agg"
+        env["PYTORCH_CUDA_ALLOC_CONF"] = "expandable_segments:True"
         try:
             with open(log_path, "w", encoding="utf-8") as log:
                 log.write("$ " + " ".join(cmd) + "\n\n")
@@ -135,17 +194,21 @@ class JobManager:
             self._update(job, status="failed", error=str(exc), finished_at=_now())
             return
         report = None
-        if job["kind"] == "reproduce":
-            report_path = Path(job["dir"]) / "report.json"
-            if report_path.exists():
+        if job.get("report_path"):
+            report_file = Path(job["report_path"])
+            if report_file.exists():
                 try:
-                    report = json.loads(report_path.read_text(encoding="utf-8"))
+                    report = json.loads(report_file.read_text(encoding="utf-8"))
                 except Exception:
                     report = None
         status = "completed" if exit_code == 0 else "failed"
+        error = None if exit_code == 0 else "command exited with %d" % exit_code
+        if job["kind"] == "query":
+            if not report or report.get("status") != "completed":
+                status = "failed"
+                error = (report or {}).get("error") or "query did not complete"
         self._update(job, status=status, exit_code=exit_code, finished_at=_now(),
-                     report=report,
-                     error=None if exit_code == 0 else "command exited with %d" % exit_code)
+                     report=report, error=error)
 
     def get(self, job_id, include_log=True):
         with self._lock:

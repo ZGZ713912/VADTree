@@ -180,7 +180,7 @@ export interface Pipeline {
 
 export interface Job {
   id: string;
-  kind: "reproduce" | "verify";
+  kind: "reproduce" | "verify" | "query" | string;
   status: "queued" | "running" | "completed" | "failed" | "cancelled" | string;
   created_at: string;
   started_at: string | null;
@@ -190,11 +190,13 @@ export interface Job {
   command: string;
   dir: string;
   exit_code: number | null;
-  report: {
+  upload_id?: string | null;
+  params?: Record<string, unknown>;
+  report: ({
     checks?: ReproCheck[];
     versions?: Record<string, unknown>;
     generated_at?: string;
-  } | null;
+  } & Record<string, unknown>) | null;
   error: string | null;
   elapsed: number;
   log_text: string;
@@ -249,4 +251,56 @@ export interface SearchHit {
   name?: string;
   label: string;
   sub?: string;
+}
+export interface UploadMeta {
+  id: string;
+  name: string;
+  size: number;
+  duration: number;
+  fps: number;
+  width: number;
+  height: number;
+  preview_url: string;
+  created_at: string;
+}
+
+export interface VlmStatus {
+  ready: boolean;
+  deps_ready?: boolean;
+  python: string | null;
+  model: string;
+  model_present: boolean;
+  ffmpeg: boolean;
+  ffprobe: boolean;
+}
+
+export interface QueryWindow {
+  index: number;
+  start: number;
+  end: number;
+  probability: number;
+  evidence: string;
+  evidence_frames: number[];
+  thumb: string | null;
+}
+
+export interface QueryResult {
+  status: string;
+  created_at: string;
+  finished_at?: string;
+  description: string;
+  video: { path: string; duration: number; fps: number; width: number; height: number };
+  settings: { window: number; stride: number; frames: number; max_windows: number };
+  windows: QueryWindow[];
+  aggregate: {
+    score: number;
+    verdict: string;
+    mean_probability: number;
+    best_window: number;
+    best_start: number;
+    best_end: number;
+    coverage: QueryWindow[];
+    windows_total: number;
+  } | null;
+  model: string;
 }

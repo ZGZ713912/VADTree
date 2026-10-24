@@ -5,7 +5,7 @@ import { api } from "../api";
 import { useAsync, useDebounced } from "../hooks";
 import type { Health, SearchHit } from "../types";
 import {
-  ArchiveIcon, DeskIcon, EvidenceIcon, MarkIcon, PipelineIcon, RunsIcon, SearchIcon,
+  ArchiveIcon, DeskIcon, EvidenceIcon, MarkIcon, PipelineIcon, QueryIcon, RunsIcon, SearchIcon,
 } from "./Icons";
 import { StatusDot } from "./Status";
 
@@ -13,14 +13,16 @@ const NAV = [
   { to: "/", label: "总览", num: "01", icon: DeskIcon },
   { to: "/runs", label: "运行", num: "02", icon: RunsIcon },
   { to: "/evidence", label: "证据", num: "03", icon: EvidenceIcon },
-  { to: "/pipeline", label: "流程", num: "04", icon: PipelineIcon },
-  { to: "/archive", label: "档案", num: "05", icon: ArchiveIcon },
+  { to: "/query", label: "描述", num: "04", icon: QueryIcon },
+  { to: "/pipeline", label: "流程", num: "05", icon: PipelineIcon },
+  { to: "/archive", label: "档案", num: "06", icon: ArchiveIcon },
 ];
 
 const CRUMB: Record<string, string> = {
   "/": "总览",
   "/runs": "运行台账",
   "/evidence": "证据",
+  "/query": "描述检索",
   "/pipeline": "流程",
   "/archive": "档案",
 };

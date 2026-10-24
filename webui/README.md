@@ -25,6 +25,20 @@ npm run build
 
 The Python server serves ../webui/dist automatically when present.
 
+## Description query backend
+
+The /query page is optional and uses a separate Chinese-CLIP environment:
+
+~~~bash
+cd ..
+bash scripts/setup_vlm.sh
+.venv/bin/python -m server.app --port 8765
+~~~
+
+Uploads and frames stay in ../uploads; job logs stay in ../runs. The page calls
+/api/query/status and disables the start button until the model is present.
+The score is a heuristic text/image match, not a calibrated probability.
+
 ## Screenshot and interaction checks
 
 These scripts need Chromium. Set CHROME_PATH if the cached Playwright binary is
